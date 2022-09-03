@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+{% load auth_extras %}
+{% block cuerpo %}
+
+    <h1 class="h1">Editar Semillero</h1>
+    <br>
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label><b>Información General</b></label>
+
+        <textarea name="history" id="history" cols="30" placeholder="Antecedentes"  rows="10" required>{% if semillero.history %}{{semillero.history}}{% endif %}</textarea>
+        <textarea name="mision" id="mision" cols="30" placeholder="Misión" rows="10" required>{% if semillero.mision %}{{semillero.mision}}{% endif %}</textarea>
+        <textarea name="vision" id="vision" cols="30" placeholder="Visión" rows="10" required>{% if semillero.vision %}{{semillero.vision}}{% endif %}</textarea>
+        <textarea name="goals" id="goals" cols="30" placeholder="Objetivos" rows="10" required>{% if semillero.goals %}{{semillero.goals}}{% endif %}</textarea>
+
+        <label><b>Correo de contacto</b></label>
+        <input type="text" name="mail" id="mail" placeholder="Correo de contacto" value="{{semillero.mail}}" autocomplete="off" required>
+        
+        <label><b>Descripcion del semillero</b></label>
+        <textarea name="description" id="description" cols="30" placeholder="Descripcion" rows="10" required>{{ semillero.description }}</textarea>
+
+        <label><b>Imagen del semillero</b></label>
+        <a id="image1" href="{{semillero.image.url}}" download>{{semillero.image}}</a>
+        <input type="file" name="image" id="image">
+
+        <input type="submit" id="enviar" value="Editar información"/>  
+    </form>
+    <br>
+
+{% load static %}
+    <script src="{% static 'core/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'create/css/create_styles.css' %}">
+{% endblock %}

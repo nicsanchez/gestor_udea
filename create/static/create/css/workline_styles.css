@@ -1,0 +1,33 @@
+#linea {
+    color: #000;
+    background: #fff;
+}
+
+h1 {
+    display: inline-block;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+}
+
+label {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+input[type=text] {
+    width: 90%;
+}
+
+input[type=submit] {
+    background-color: #396534; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+input[type=submit]:hover {
+    background-color: #274712;
+    cursor: pointer;
+}

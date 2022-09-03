@@ -1,0 +1,34 @@
+body p{
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: justify;
+    color: #274712;
+    width: 80%;
+    margin: 20px auto;
+}
+header{
+    width: 100%;
+    display: inline-block;
+}
+
+header figure{
+    margin: 0 auto;
+    width: 80%;
+}
+
+header figure img{
+    width: 100%;
+}
+
+footer{
+    width: 100%;
+}
+
+footer p{
+    padding: 20px;
+    width: 80%;
+    margin: 20px auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: gray;
+}

@@ -1,0 +1,77 @@
+#semillero {
+    color: #000;
+    background: #fff;
+}
+
+.container{
+    background: #fff;
+    opacity: 1;
+}
+.row p{
+    font-family: Roboto-Light;
+    font-weight: 500;
+    text-align: justify;
+}
+
+.row p b{
+    font-family: Roboto-Regular;
+    color: #348F41;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.row ul{
+    font-family: Roboto-Light;
+}
+
+table tbody tr th {
+    font-family: Roboto-Regular;
+    color: #01602D;
+    font-size: 15px;
+}
+
+h1 {
+    display: inline-block;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+}
+
+label {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button {
+    background-color: #396534; /* Green */
+    border: none;
+    color: white;
+    padding: 1px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, tr, th, td {
+    text-align: center;
+    border: 2px solid black;
+    font-family: Roboto-Light;
+    font-size: 10pt;
+    padding: 10px;
+}
+
+table a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #348F41;
+}
+
+
+div table input {
+    border: 0;
+    appearance: none;
+}

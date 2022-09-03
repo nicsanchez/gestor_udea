@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+
+    <!--- Slider --->
+    <h1 class="h1">{{item.title}}</h1><br>
+
+    <div class="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred">
+        {{ item.content | safe }}
+    </div>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/home_styles.css' %}">
+
+{% endblock %}

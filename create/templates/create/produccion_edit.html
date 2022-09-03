@@ -1,0 +1,101 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+    <h1 class="h1">Editar producción</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'produccion' %}"><i class="fas fa-reply"></i></a>
+    <br>
+    <br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="">Categoria de producción cientifica</label>
+        <select name="principal" id="principal" required>
+            <option disabled selected>Escoja una categoria</option>
+            {% for principal in principales %}
+                {% if produccion.categoria.categoria.id ==  principal.id%}
+                    <option value="{{principal.id}}" selected>{{principal.nombre}}</option>
+                {% else %}
+                    <option value="{{principal.id}}">{{principal.nombre}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <div class="generacion">
+            <label>Tipo de generación de nuevo conocimiento</label>
+            <select name="adya_generacion" id="adya_generacion" required>
+                <option disabled selected>Escoja un tipo de generación de nuevo conocimiento</option>
+                {% for generacion in Generaciones %}
+                    {% if generacion.id == produccion.categoria.id%}
+                        <option value="{{generacion.id}}" selected>{{generacion.nombre}}</option>
+                    {% else %}
+                        <option value="{{generacion.id}}">{{generacion.nombre}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="produccion">
+            <label>Tipo de produccion técnica y tecnológica</label>
+            <select name="adya_produccion" id="adya_produccion" required>
+                <option disabled selected>Escoja un tipo de produccion técnica y tecnológica</option>
+                {% for produccionAdya in Producciones %}
+                    {% if produccionAdya.id == produccion.categoria.id%}
+                        <option value="{{produccionAdya.id}}" selected>{{produccionAdya.nombre}}</option>
+                    {% else %}
+                        <option value="{{produccionAdya.id}}">{{produccionAdya.nombre}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="producto">
+            <label>Tipo de producto de divulgación</label>
+            <select name="adya_producto" id="adya_producto" required>
+                <option disabled selected>Escoja un tipo de producto de divulgación</option>
+                {% for producto in Productos %}
+                    {% if producto.id == produccion.categoria.id%}
+                        <option value="{{producto.id}}" selected>{{producto.nombre}}</option>
+                    {% else %}
+                        <option value="{{producto.id}}">{{producto.nombre}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label>Mes y año de publicación</label>
+            <select name="mes" id="mes" required>
+                <option disabled selected>Escoja un mes</option>
+                {% for mes in Meses %}
+                    {% if mes.id == produccion.mes.id%}
+                        <option value="{{mes.id}}" selected>{{mes.descripcion}}</option>
+                    {% else %}
+                        <option value="{{mes.id}}">{{mes.descripcion}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            {% if produccion.año %}
+                <input id="año" name="año" type="text" value="{{produccion.año}}" max="{% now 'Y' %}" placeholder="Ingrese año de publicación" autocomplete="off">
+            {% else %}
+                <input id="año" name="año" type="text" max="{% now 'Y' %}"  placeholder="Ingrese año de publicación" autocomplete="off">
+            {% endif %}
+        </div>
+        <div>
+            <label>Proyecto Asociado</label>
+            <select name="proyecto" id="proyecto">
+                <option disabled selected>Escoja un proyecto</option>
+                {% for proyecto in proyectos %}
+                    {% if proyecto.id == produccion.proyecto.id%}
+                        <option value="{{proyecto.id}}" selected>{{proyecto.codigo}}</option>
+                    {% else %}
+                        <option value="{{proyecto.id}}">{{proyecto.codigo}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label>Produccion cientifica</label>
+            <a id="file" href="{{produccion.archivo.url}}" download>Archivo Adjunto</a>
+            <input type="file" name="archivo" id="archivo">
+            <input id="prod_edit_submit" type="submit" value="Ingresar Produccion">
+        </div>
+    </form>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'create/css/produccion.css' %}">
+    <script type="text/javascript" src="{% static 'create/js/script.js' %}"></script>
+{% endblock %}

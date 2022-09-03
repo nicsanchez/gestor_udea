@@ -1,0 +1,100 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">Reportes realizados al proyecto</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'proyectos' %}"><i class="fas fa-reply"></i></a>
+    <input type="text" id="textSearch" name="search" value="" placeholder="Búsqueda...">
+    <br>
+    <br>
+    {% if reportes.count != 0%}
+        <table id="tableConv" style="overflow-x:auto;">
+            <tr>
+                <th>Tipo</th>
+                <th>Documento</th> 
+                <th>Observaciones</th>
+                {% if request.user|is_admin %}
+                    <th>Acciones</th>
+                {% endif %}
+            </tr>
+            {% for reporte in reportes %}
+                <tr class="info">
+                    <td>
+                        {% if reporte.tipo == "1" %}
+                            Avance
+                        {% elif reporte.tipo == "2" %}                            
+                            Final
+                        {% endif %}                
+                    </td>
+                    <td id="documento_{{reporte.id}}">
+                        {% if reporte.documento %}
+                            <a href="{{reporte.documento.url}}" download>{{reporte.documento}}</a>
+                        {% else %}
+                            {{reporte.description}}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if reporte.observaciones %}
+                            {% if reporte.observaciones.documento %}
+                                <a href="{{reporte.observaciones.documento.url}}" download>{{reporte.observaciones.description}}</a>
+                            {% else %}
+                                {{reporte.observaciones.description}}
+                            {% endif %}
+                        {% else %}
+                            Aun no hay observaciones
+                        {% endif %}
+                    </td>    
+                    {% if request.user|is_admin %}
+                        <td>
+                            <a class="config2" title="Enviar" alt="Enviar" id="edit" href="#" onclick="modify({{reporte.id}})"> <i class="fas fa-wrench"></i></a> 
+                        </td>
+                    {% endif %}    
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="message in-info">
+            <p>En este momento no se han realizado reportes</p>
+        </div>
+    {% endif %}
+    <br>
+    <div class="modificar">
+        <form id="f2" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Adjunte los siguientes campos:</label>
+            <table id="tabla" >
+                <input type="hidden" name="id_d" id="id_d" value="">
+                <input type="hidden" name="caso" id="caso" value="0">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Documento Adjunto</th>
+                    <th>Acciones</th>
+                </tr>
+                <tr>
+                    <td id="nombre"></td>
+                    <td>
+                        <textarea name="descripcion" id="descripcion" cols="30" rows="10" placeholder="Ingrese una descripcion" required></textarea>
+                    </td>
+                    <td>
+                        <span id="span"></span>
+                        <br id="br">
+                        <button id="boton" type="button" onclick="abrir('doc')" id="boton">Examinar</button>
+                        <br>
+                        <input type="file" name="doc" id="doc" style="display:none;" onchange="texto(this,'span')">
+                    </td>
+                    <td><a class="config2" title="Enviar" alt="Enviar" id="edit11" href="#" onclick=""><i class="fab fa-telegram-plane"></i></a> </td>
+                </tr>
+            </table>
+        </form>    
+    </div>
+    <br>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/participate_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'conv/css/asignar_proyecto.css' %}">
+    <link rel="stylesheet" href="{% static 'conv/css/proyectos_styles.css' %}">
+{% endblock %}

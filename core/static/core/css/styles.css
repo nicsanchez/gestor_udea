@@ -1,0 +1,419 @@
+@font-face {
+    font-family: 'Roboto-Condensed-bold';
+    src: url(../fonts/RobotoCondensed-Bold.ttf);
+}
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url(../fonts/RobotoSlab-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Roboto-Light';
+    src: url(../fonts/RobotoSlab-Light.ttf);
+}
+
+@font-face {
+    font-family: 'Renogare-Regular';
+    src: url(../fonts/Renogare-Regular.otf);
+}
+
+* {
+    margin: 0;
+}
+
+header {
+    background: #01602D;
+    width: 1050px;
+    height: 194px;
+    margin: 0 auto;
+}
+
+.header-img{
+    width: 290px;
+    float: left;
+    border-right-width: 2px;
+    border-right-style: solid;
+    border-color: white;
+    padding-right: 48px;
+}
+
+.header-content{
+    width: 510px;
+    float: left;
+}
+
+.header-content p{
+    color: white;
+    font-family: Renogare-Regular;
+    font-size: 34px;
+    font-weight: bold;
+    text-align:center;
+}
+
+.header {
+    width: 850px;
+    height: 110px;
+    margin: 0px auto;
+    padding: 42px 0px
+}
+
+header img {
+	width: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
+#title_uno {
+    padding-top: 53px;
+}
+
+nav {
+    background: #348F41;
+    width: 1050px;
+    height: 39px;
+    margin: 0 auto;
+}
+
+nav ul {
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    padding-top: 9.5px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-family: Roboto-Regular;
+    font-size: 15px;
+    padding: 9.5px;
+    color: #fff;
+    background: #348F41;
+}
+
+/* nav ul li a {
+    color: #000;
+    background: #fff;
+} */
+
+nav ul li a:hover {
+    color: #000;
+    background: #fff;
+}
+
+#login {
+    display: none;
+}
+
+#content {
+    width: 1050px;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+#formulario {
+    float: left;
+    width: 840px;
+}
+
+aside {
+    float: left;
+    background-color: #01602D;
+    margin: 30px 0 0 30px;
+    width: 180px;
+}
+
+aside div {
+    background: #01602D;
+    float: left;
+}
+
+aside div p {
+    display: inline-block;
+    font-family: Renogare-Regular;
+    padding: 5px 10px 5px 10px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+aside a {
+    display: inline-block;
+    text-decoration: none;
+    font-family: Renogare-Regular;
+    font-size: 15px;
+    color: #fff;
+    background: #348F41;
+    padding: 10px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.h1 {
+    font-family: Roboto-Condensed-bold;
+    position: relative;
+    font-size: 40px;
+    color: #8bc34a;
+    border-bottom: 5px solid #8bc34a;
+    border-bottom-color: rgb(139, 195, 74);
+    border-bottom-style: solid;
+    border-bottom-width: 5px;
+}
+
+input[type=submit] {
+    background-color: #348F41; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 30%;
+    align-content: center;
+}
+
+input[type=submit]:hover {
+    background-color: #01602D;
+    cursor: pointer;
+}
+
+input, form select, form textarea, form button, form a, form h4, form label {
+	display: block;
+	margin-bottom: 15px;
+    font-family: Roboto-Light;
+}
+
+form {
+    width: 70%;
+    margin: 0 auto;
+    font-size: 13pt;
+}
+
+table td input {
+	width: 100%;
+	text-align: center;
+	margin-bottom: 0;
+	appearance: none;
+	outline: none;
+	border: none;
+}
+
+#eliminar {
+	text-align: center;
+	color: #ffffff;
+	background: #348F41;
+}
+
+#eliminar:hover {
+	color: #ffffff;
+	background: #274712;
+	cursor: pointer;
+}
+
+div .config {
+    float: right;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+    color: white;
+    display: inline-flex;
+    text-align: center;
+    font-size: 12pt;
+    margin: 1.5% 0;
+}
+
+div .config2 {
+    float: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+    color: white;
+    display: inline-flex;
+    text-align: center;
+    font-size: 12pt;
+    margin-top: 2px;
+}
+
+div #see {
+    padding: 4px 10px;
+    background: #007473;
+}
+
+div #see:hover {
+    background: #007297;
+}
+
+div #editar, div #add {
+    padding: 4px 10px;
+    background: #348F41;
+}
+
+div #editar:hover, div #add:hover {
+    background: #01602D;
+}
+
+div #asignar {
+    padding: 4px 10px;
+    background: #FFA400;
+}
+
+div #asignar:hover {
+    background: rgb(194, 126, 0);
+}
+
+div #delete {
+    padding: 4px 12px;
+    background: #3BBFAD;
+}
+
+div #del {
+    padding: 4px 12px;
+    background: #3BBFAD;
+}
+
+div #del:hover {
+    background: #2e9c8e;
+}
+
+
+div #gen {
+    padding: 4px 12px;
+    background: #93D500;
+}
+
+div #gen:hover {
+    background: #6fa101;
+}
+
+div #delete:hover {
+    background: #2e9c8e;
+}
+
+div #back {
+    font-size: 11pt;
+    padding: 4px 12px;
+    background: #3BBFAD;
+}
+
+div #back:hover {
+    background: #2e9c8e;
+}
+
+/* table * {
+	display: inline;
+} */
+
+input[type=text],input[type=password],input[type=email] {
+	width: 100%;
+	font-size: 13pt;
+    font-family: Roboto-Regular;
+}
+
+form select {
+	width: 100%;
+	font-size: 13pt;
+}
+
+form textarea {
+	font-size: 13pt;
+	width: 100%;
+	resize: vertical;
+	height: 150px;
+	min-height: 150px;
+	max-height: 200px;
+}
+
+#textEditor {
+	width: 300px;
+}
+
+.message {
+    position: relative;
+    top: 0px;
+    width: 600px;
+    padding: 15px;
+    margin: 0 auto;
+    border-radius: 0.2rem;
+    background-color: #3BBFAD;
+}
+
+.message p {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: #fff;
+}
+
+@media screen and (max-width: 1050px){
+    header {
+        width: 100%;
+    }
+    nav {
+        width: 100%;
+    }
+	#content {
+		width: 100%;
+		min-width: 780px;
+	}
+    #formulario {
+		float: inherit;
+        margin: 0 auto;
+    }
+    aside {
+        display: none;
+        margin: 0;
+    }
+    #login {
+        clear: both;
+        display: inherit;
+    }
+}
+
+@media screen and (max-width: 840px){
+	body {
+		min-width: 780px;
+	}
+    header {
+        min-width: 780px;
+    }
+    nav {
+        display: none;
+    }
+	#content {
+		width: 100%;
+	}
+    #formulario {
+        width: 100%;
+    }
+    aside {
+        display: none;
+    }
+}
+
+#edit_sem{
+    background-color: #01602D;
+    color: white;
+    padding: 5px;
+    margin: 0;
+    display: contents;
+}
+#formulario form label.error {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #007473;
+    font-size:small;
+}
+
+#formulario form p{
+    font-family: Roboto-Light;
+}
+
+#formulario form p b{
+    font-family: Roboto-Regular;
+    color: #348F41;
+}
+
+#formulario form label{
+    font-family: Roboto-Regular;
+    color: #348F41;
+}

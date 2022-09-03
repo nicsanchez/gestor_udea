@@ -1,0 +1,49 @@
+#participar {
+    color: white;
+    background: #348F41;
+}
+
+#participar:hover {
+    color: #000;
+    background: #fff;
+}
+
+#proyectos {
+    color: #000;
+    background: #fff;
+}
+div #see4 {
+    padding: 4px 10px;
+    background: #007473;
+}
+
+div #see4:hover {
+    background: #007297;
+}
+
+div #edit, div #edit1,div #edit11 {
+    padding: 4px 10px;
+    background: #348F41;
+}
+
+div #edit:hover {
+    background: #01602D;
+}
+
+div #edit1:hover {
+    background: #01602D;
+}
+
+div #edit11:hover {
+    background: #01602D;
+}
+
+#boton {
+	display: inherit;
+	margin-bottom: 15px;
+}
+
+#tabla textarea{
+    width: 140px;
+    height: 50px;
+}

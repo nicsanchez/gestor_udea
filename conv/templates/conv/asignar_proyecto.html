@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">Asignar proyecto a un semillero</h1>
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+  		{% csrf_token %}
+        <br>
+        <p><b>Convocatoria: </b>{{convocatoria.name}}</p>
+        <br>
+        <p><b>Semillero a cargo: </b>{{semillero.name}}</p>
+        <br>
+        <input type="hidden" name="contador" id="contador" value="0">
+        <input type="text" name="codigo" id="codigo" placeholder="Codigo del proyecto" autocomplete="off" required>
+        <textarea name="description" id="description" cols="30" rows="10" placeholder="Descripción del proyecto" required></textarea>
+        <label for="closed">Fecha de inicio</label>
+        <input type="date" min="{{today}}" name="start" id="start" required>
+        <label for="closed">Fecha de cierre</label>
+        <input type="date" min="{{today}}" name="closed" id="closed" required>
+        <table id="tabla">
+            <tr>
+                <th>Descripción</th>
+                <th>Documentos</th>
+                <th>Acciones</th>
+            </tr>
+        </table>
+        <button type="button" name="add_doc2" id="add_doc2">Añadir documento</button>
+        <input type="submit" value="Enviar"/>
+        </div>
+    </form>
+    
+    {% if mensaje %}
+        <script lenguague="JavaScript">
+            $.alert({
+                boxWidth: '400px',
+                useBootstrap: false,
+                closeIcon: true,
+                title: '{{mensaje1}}',
+                content: '{{mensaje}}',
+                typeAnimated: true,
+                buttons: {
+                    somethingElse: {
+                        text: 'Ok',
+                        btnClass: 'btn-warning',
+                        action: function(){
+                            window.location = "{% url 'participar' %}";
+                        }
+                    },
+                }
+            });
+        </script>
+    {% endif %}
+
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/participate_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'conv/css/asignar_proyecto.css' %}">
+{% endblock %}

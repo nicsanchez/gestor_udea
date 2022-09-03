@@ -1,0 +1,149 @@
+{% extends 'core/base.html' %}
+{% load auth_extras %}
+{% block cuerpo %}
+
+    <h1 class="h1">Convocatorias</h1>
+    {% if request.user.is_authenticated %}
+        {% if request.user|is_admin %}
+            <a class="config" title="Agregar" alt="Agregar" id="add" href="#"><i class="fas fa-plus"></i></a>
+            <a class="config" title="Ver" alt="Ver" id="see" href="#"><i class="fas fa-eye"></i></a>
+        {% elif request.user|is_coord %}
+            <a class="config" title="Visualizar convocatorias abiertas" alt="Visualizar convocatorias abiertas" id="see1" href="#"><i class="fas fa-eye"></i></a>
+            <a class="config" title="Visualizar mis convocatorias" alt="Visualizar mis convocatorias" id="see2" href="#"><i class="far fa-handshake"></i></a>
+        {% endif %}
+    {% endif %}
+    <input type="text" id="textSearch" name="search" value="" placeholder="Búsqueda...">
+    <br>
+    <br>
+    
+    <div class="Mostrar">
+        {% if convocatorias.count != 0%}
+            <table id="tableConv" style="overflow-x:auto;">
+                <tr>
+                    <th>Número</th>
+                    <th>Título</th>
+                    <th>Fecha de apertura</th>
+                    <th>Fecha de cierre</th>
+                    {% if request.user|is_admin %}
+                        <th>Acciones</th>
+                    {% endif %}
+                </tr>
+                {% for convocatoria in convocatorias %}
+                    <tr class="info">
+                        <td>{{convocatoria.id}}</td>
+                        <td><a href="{% url 'details' id_item=convocatoria.id %}">{{convocatoria.name}}</a></td>
+                        <td>{{convocatoria.opened}}</td>
+                        <td>{{convocatoria.closed}}</td>
+                        {% if request.user|is_admin %}
+                            <td>
+                                <a class="config2" title="Editar" alt="Editar" id="editar" href="{% url 'convocatoria_edit' id=convocatoria.id %}"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="config2" title="Eliminar" alt="Eliminar" id="del" onclick="delete1('{{convocatoria.id}}','3')" href="#"><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+        {% else %}
+            <div class="message in-info">
+                <p>En este momento no hay convocatorias</p>
+            </div>
+        {% endif %}  
+    </div>
+    {%if request.user|is_coord %}
+        <div id="mis_convocatorias">
+            {% if participaciones.count != 0%}
+                <table id="tableConv" style="overflow-x:auto;">
+                    <tr>
+                        <th>Estado</th>
+                        <th>Número</th>
+                        <th>Título</th>
+                        <th>Fecha de apertura</th>
+                        <th>Fecha de cierre</th>
+                        <th>Acciones</th>
+                    </tr>
+                    {% for participacion in participaciones %}
+                        <tr class="info">
+                            {% if participacion.estado == "0" %}
+                                <td id="new"><i class="fas fa-battery-empty"></i></td>
+                            {% elif participacion.estado == "2" %}
+                                <td id="pen_r"><i class="fas fa-battery-quarter"></i></td>
+                            {% elif participacion.estado == "3" %}
+                                <td id="pen_c"><i class="fas fa-battery-three-quarters"></i></td>
+                            {% elif participacion.estado == "1" %}    
+                                <td id="ready"><i class="fas fa-battery-full"></i></td>
+                            {% endif %}
+                            <td>{{participacion.id_convocatoria.id}}</td>
+                            <td><a href="{% url 'details' id_item=participacion.id_convocatoria.id %}">{{participacion.id_convocatoria.name}}</a></td>
+                            <td>{{participacion.id_convocatoria.opened}}</td>
+                            <td>{{participacion.id_convocatoria.closed}}</td>
+                            <td><a class="config2" title="Visualizar estado" alt="Visualizar estado" id="see1" href="{% url 'adjuntos' id=participacion.id_semillero.id id_conv=participacion.id_convocatoria.id%}"><i class="fas fa-eye"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <br>
+                <div class="row">
+                    <p>Estado de las convocatorias</p>
+                    <hr>
+                </div>
+                <br>
+                <table id="tabla_status">
+                    <tr>
+                        <th>Icono</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td id="new"><i class="fas fa-battery-empty"></i></td>
+                        <td>Nuevo participante</td>
+                    </tr>
+                    <tr>
+                        <td id="pen_r"><i class="fas fa-battery-quarter"></i></td>
+                        <td>Pendiente de revision del administrador</td>
+                    </tr>
+                    <tr>
+                        <td id="pen_c"><i class="fas fa-battery-three-quarters"></i></td>
+                        <td>Pendiente de correccion del coordinador</td>
+                    </tr>
+                    <tr>
+                        <td id="ready"><i class="fas fa-battery-full"></i></td>
+                        <td>Listo</td>
+                    </tr>
+                </table>
+                <br>
+            {% else %}
+                <div class="message in-info">
+                    <p>En este momento el semillero no está participando en alguna convocatoria.</p>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}  
+    <form id="convForm" action="" method="POST" enctype="multipart/form-data">
+  		{% csrf_token %}
+        <input type="hidden" name="contador" id="contador" value="0">
+        <input type="hidden" name="estado" id="estado" value="0">
+        <div class="Crear" id="campos">
+            <input type="text" name="name" id="name" placeholder="Nombre de la convocatoria" autocomplete="off" required>
+            <textarea name="description" id="description" cols="30" rows="10" placeholder="Descripción" required></textarea>
+			<label for="closed">Fecha de apertura</label>
+            <input type="date" name="opened" id="opened" required>
+            <label for="closed">Fecha de cierre</label>
+            <input type="date" name="closed" id="closed" required>
+            <label for="add_doc">Documentos Asociados</label>
+            <table id="tabla">
+                <tr>
+                    <th>Descripción</th>
+                    <th>Tipo</th>
+                    <th>Documentos</th>
+                    <th>Acciones</th>
+                </tr>
+            </table>
+            <button type="button" name="add_doc" id="add_doc">Añadir documento</button>
+            <input id="convCreate" type="submit" value="Enviar"/>
+        </div>
+    </form>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/participate_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'conv/css/asignar_proyecto.css' %}">
+
+{% endblock %}

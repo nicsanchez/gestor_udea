@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">Datos del integrante</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'register' %}"><i class="fas fa-reply"></i></a>
+    <a class="config" title="Editar" alt="Editar" id="editar" href="{% url 'integrante_edit' id=integrante.id %}"><i class="fas fa-pencil-alt"></i></a>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row" >
+            <p><b>Nombres</b></p>  
+            <p>{{integrante.name}} {{integrante.lastname}}</p>
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Documento</b></p>
+            <p>{{integrante.document}}</p>
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Correo</b></p>
+            <p>{{integrante.email}}</p>
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Telefono</b></p>
+            <p>{{integrante.phone}}</p>
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Informacion Adicional</b></p>
+            {% if integrante.aditional %}
+                <p>{{integrante.aditional}}</p>
+            {% else %}
+                <p>Sin información adicional</p>
+            {% endif %}
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Fecha de ingreso</b></p>
+            <p>{{participante.joined}}</p>
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Rol</b></p>
+            <p>{{participante.rol}}</p>
+        </div>
+        <br>
+        {% if linea_coordinador %}
+            <div class="row" >
+                <p><b>Linea de investigacion</b></p>
+                {% for linea in linea_coordinador %}
+                    <ul>
+                        <li>{{linea.id_linea.name}}</li>
+                    </ul>
+                {% endfor %}        
+            </div>
+            <br>
+        {% endif %}
+        {% if atributo %}
+            <div class="row" >
+                <p><b>Programa</b></p>
+                <p>{{atributo.id_programa.name}}</p>
+            </div>
+            <br>
+            <div class="row" >
+                <p><b>Tipo de programa</b></p>
+                <p>{{atributo.id_programa.tipo}}</p>
+            </div>
+            <br>
+            <div class="row" >
+                <p><b>Nivel</b></p>
+                <p>{{atributo.nivel}}</p>
+            </div>
+            <br>
+        {% endif %}
+        {% if atributo_otra %}
+            <div class="row" >
+                <p><b>Tipo de programa</b></p>
+                {% if atributo_otra.tipo == '1' %}
+                    <p>Pregrado</p>
+                {% elif atributo_otra.tipo == '2' %}
+                    <p>Postgrado</p>
+                {% endif %}
+            </div>
+            <br>
+        {% endif %}
+        <div class="row" >
+            <p><b>Estado</b></p>
+            <p>
+                {% if participante.status == 1 %}   
+                    Activo
+                {% else %}
+                    Inactivo    
+                {% endif %}                        
+            </p>
+        </div>
+        <br>
+    </div>
+    {% load static %}
+    <script src="{% static 'core/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'create/css/details_style.css' %}">
+
+{% endblock %}

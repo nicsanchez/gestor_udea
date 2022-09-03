@@ -1,0 +1,126 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+    <h1 class="h1">Produccion Cientifica</h1>
+    <a class="config" title="Editar" alt="Editar" id="editar" href="#"><i class="fas fa-plus"></i></a>
+    <a class="config" title="Ver" alt="Ver" id="see" href="#"><i class="fas fa-eye"></i></a>
+    <input type="text" id="textSearch" name="search" value="" placeholder="Búsqueda...">
+    <br>
+    <br>
+    <div id="ver">
+        {% if producciones.count != 0%}
+            <table id="tableConv" class="tablesorter" style="overflow-x:auto;">
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Tipo</th>
+                        <th>Mes de publicación</th>
+                        <th>Año de publicación</th>
+                        <th>Proyecto asociado</th>
+                        <th>Archivo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>    
+                    {% for produccion in producciones %}
+                        <tr class="info">
+                            <td>{{produccion.categoria.categoria}}</td>
+                            <td>{{produccion.categoria}}</td>
+                            <td>{{produccion.mes}}</td>
+                            <td>
+                                {% if produccion.año %}
+                                    {{produccion.año}}
+                                {% else %}    
+                                    No se ha ingresado un año
+                                {% endif %} 
+                            </td>
+                            <td>
+                                {% if produccion.proyecto %}
+                                    {{produccion.proyecto}}
+                                {% else %}    
+                                    No está asociado a ningun proyecto
+                                {% endif %}    
+                            </td>
+                            <td><a href="{{produccion.archivo.url}}" download>Archivo adjunto</a></td>
+                            <td>
+                                <a class="config2" title="Editar" alt="Editar" id="editar" href="{% url 'produccion_edit' id=produccion.id %}"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="config2" title="Eliminar" alt="Eliminar" id="del" name="delete_produccion" href="{% url 'produccion_delete' id=produccion.id%}"><i class="fas fa-trash-alt"></i>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>    
+            </table>
+        {% else %}
+             <div class="message in-info">
+                <p>En este momento no tienes producciones cientificas registradas.</p>
+            </div>
+        {% endif %}      
+    </div>
+    <div id="crear">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Categoria de producción cientifica</label>
+            <select name="principal" id="principal" required>
+                <option disabled selected>Escoja una categoria</option>
+                {% for principal in principales %}
+                    <option value="{{principal.id}}">{{principal.nombre}}</option>
+                {% endfor %}
+            </select>
+            <div class="generacion">
+                <label>Tipo de generación de nuevo conocimiento</label>
+                <select name="adya_generacion" id="adya_generacion" required>
+                    <option disabled selected>Escoja un tipo de generación de nuevo conocimiento</option>
+                    {% for generacion in Generaciones %}
+                        <option value="{{generacion.id}}">{{generacion.nombre}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="produccion">
+                <label>Tipo de produccion técnica y tecnológica</label>
+                <select name="adya_produccion" id="adya_produccion" required>
+                    <option disabled selected>Escoja un tipo de produccion técnica y tecnológica</option>
+                    {% for produccion in Producciones %}
+                        <option value="{{produccion.id}}">{{produccion.nombre}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="producto">
+                <label>Tipo de producto de divulgación</label>
+                <select name="adya_producto" id="adya_producto" required>
+                    <option disabled selected>Escoja un tipo de producto de divulgación</option>
+                    {% for producto in Productos %}
+                        <option value="{{producto.id}}">{{producto.nombre}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label>Mes y año de publicación</label>
+                <select name="mes" id="mes" required>
+                    <option disabled selected>Escoja un mes</option>
+                    {% for mes in Meses %}
+                        <option value="{{mes.id}}">{{mes.descripcion}}</option>
+                    {% endfor %}
+                </select>
+                <input id="año" name="año" type="number" max="{% now 'Y' %}" placeholder="Ingrese año de publicación" autocomplete="off">
+            </div>
+            <div>
+                <label>Proyecto Asociado</label>
+                <select name="proyecto" id="proyecto">
+                    <option disabled selected>Escoja un proyecto</option>
+                    {% for proyecto in proyectos %}
+                        <option value="{{proyecto.id}}">{{proyecto.codigo}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label>Inserte el archivo de produccion cientifica</label>
+                <input type="file" name="archivo" id="archivo" required>
+                <input id="prod_submit" type="submit" value="Ingresar Produccion">
+            </div>
+        </form>
+    </div>    
+    <br>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'create/css/produccion.css' %}">
+    <script type="text/javascript" src="{% static 'create/js/script.js' %}"></script>
+{% endblock %}

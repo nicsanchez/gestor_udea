@@ -1,0 +1,155 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">Documentos Adjuntos</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'details' id_item=id_conv %}"><i class="fas fa-reply"></i></a>
+    <br>
+    <br>
+    <form id="f1" class="formulario" action="" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id_c" id="id_c">
+        <input type="hidden" name="caso" id="caso">
+        <div id="participantes">
+            {% csrf_token %}
+            {% if documentos.count != 0%}
+                <table>
+                    <tr>
+                        <th>Documento de la convocatoria </th>
+                        <th>Documento adjunto</th>               
+                        <th>Tipo</th>
+                    {%  if request.user|is_coord %}
+                        <th>Administrador que revisó la peticion </th>
+                    {% endif %}
+                        <th>Comentarios</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    {% for documento in documentos %}
+                        <tr>
+                            <td id="documento_{{documento.id}}">
+                                {% if documento.id_documento.documento %}
+                                    <a id="a1" href="{{documento.id_documento.documento.url}}" download>{{documento.id_documento.description}}</a>
+                                {% else %} 
+                                    {{documento.id_documento.description}}
+                                {% endif %}
+                            </td>
+                            <td><a id="a1" href="{{documento.documento.url}}" download>{{documento.id_documento.description}}</a></td>
+            
+                            {% if documento.id_documento.tipo == 1 %}
+                                <td>Informativo</td>
+                            {% elif documento.id_documento.tipo == 2 %}   
+                                <td>Opcional</td>
+                            {% elif documento.id_documento.tipo == 3 %}   
+                                <td>Obligatorio</td>    
+                            {% endif %} 
+            
+                            {% if request.user|is_coord %}
+                                {% if documento.id_usuario %}
+                                    <td>{{documento.id_usuario.first_name}}<br>{{documento.id_usuario.last_name}}</td>
+                                {% else %}    
+                                    <td>Ningun administrador<br>ha revisado el documento</td>
+                                {% endif %}        
+                            {% endif %}
+                            <td>
+                                {% if request.user|is_admin %}
+                                    {% if documento.comentarios%}
+                                        <a id="a1" href="{{documento.comentarios.url}}" download>Ver comentarios</a>
+                                        <br id="br">
+                                    {% endif %}        
+                                    <span id="span_{{documento.id}}"></span>
+                                    <br id="br">
+                                    <input type="file" name="comment_{{documento.id}}" id="comment_{{documento.id}}" value="" style="display:none;" onchange="texto(this,'span_{{documento.id}}')">
+                                    <button type="button" onclick="abrir('comment_{{documento.id}}')" id="boton">Adjuntar</button>
+                                {% elif request.user|is_coord %}
+                                    {% if documento.comentarios%}
+                                        <a id="a1" href="{{documento.comentarios.url}}" download>Comentarios</a>
+                                    {% else %}    
+                                        Sin comentarios
+                                    {% endif %}        
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if request.user|is_admin %}
+                                    <select name="state_{{documento.id}}" id="state_{{documento.id}}">
+                                        <option disabled selected>Seleccione</option>
+                                        {% if documento.estado == "1" %}
+                                            <option value="1" selected>Aceptado</option>
+                                            <option value="2">Rechazado</option>
+                                        {% elif documento.estado == "2" %}   
+                                            <option value="1">Aceptado</option>
+                                            <option value="2" selected>Rechazado</option>
+                                        {% elif documento.estado == "0" %}   
+                                            <option value="1">Aceptado</option>
+                                            <option value="2">Rechazado</option>
+                                        {% endif %} 
+                                    </select>
+                                {% elif request.user|is_coord %}
+                                    {% if documento.estado == "1" %}
+                                        Aceptado
+                                    {% elif documento.estado == "2" %}   
+                                        Rechazado
+                                    {% elif documento.estado == "0" %}   
+                                        Sin revisar
+                                    {% endif %} 
+                                {% endif %}
+                                </td>
+                            <td>
+                                {% if request.user|is_admin %}
+                                    <a class="config2" title="Enviar" alt="Enviar" id="send" href="#" onclick="send({{documento.id}})"><i class="fab fa-telegram-plane"></i></a> 
+                                {% elif request.user|is_coord %}
+                                    {% if documento.estado == "2" %}
+                                        <a class="config2" title="Editar" alt="Editar" id="edit" href="#" onclick="modify({{documento.id}})"> <i class="fas fa-wrench"></i></a> 
+                                    {%else%}
+                                        Sin Acciones
+                                    {% endif %}        
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}      
+                </table>
+            {% else %}
+                <div class="message in-info">
+                    <p>La convocatoria no posee documentos adjuntos.</p>
+                </div>
+            {% endif %}          
+        </div>
+    </form>
+    {% if request.user|is_admin %}
+        <br>
+        <input type="button" onclick="send_mail({{id}})" value="Finalizar revisión">
+    {% endif %}            
+    <br>
+    <div class="modificar">
+        <form id="f2" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Adjunte el siguiente documento:</label>
+            <table id="tabla" >
+                <input type="hidden" name="id_d" id="id_d" value="">
+                <input type="hidden" name="caso" id="caso" value="0">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Adjuntar</th>
+                    <th>Acciones</th>
+                </tr>
+                <tr>
+                    <td id="nombre"></td>
+                    <td>
+                        <span id="span"></span>
+                        <br id="br">
+                        <button type="button" onclick="abrir('doc')" id="boton">Adjuntar</button>
+                        <input type="file" name="doc" id="doc" style="display:none;" onchange="texto(this,'span')">
+                    </td>
+                    <td><a class="config2" title="Editar" alt="Editar" id="edit1" href="#" onclick=""><i class="fab fa-telegram-plane"></i></a> </td>
+                </tr>
+            </table>
+        </form>    
+    </div>
+    <br>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/details_styles.css' %}">
+
+{% endblock %}

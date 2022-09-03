@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+{% load auth_extras %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gestor de semilleros | Facultad de ingenieria</title>
+    <link rel="stylesheet"  href="{% static 'core/css/jquery-confirm.min.css' %}">
+    <script src="{% static 'core/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'core/js/all.min.js' %}"></script>
+    <script src="{% static 'core/js/jquery-confirm.min.js' %}"></script>
+    <script src="{% static 'core/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'core/js/jquery.tablesorter.min.js' %}"></script>
+    <script src="{% static 'core/js/ckeditor/ckeditor.js' %}"></script>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+
+<body>
+        <header>
+            <div class="header">
+                <div class="header-img">
+                    <img src="{% static 'core/img/facultad-ingenieria.png' %}" alt="">
+                </div>
+                <div class="header-content">
+                    <p>Sistema de Gestión de Semilleros</p>
+                </div>
+            </div>    
+        </header>
+        <nav>
+            <ul>
+                {% if request.user.is_authenticated %}
+                    {% if request.user|is_admin %}
+                        <li><a href="{% url 'add_news' %}" id="noticias">Noticias</a></li>
+                        <li><a href="{% url 'create' %}" id="semillero">Semilleros</a></li>
+                        <li><a href="{% url 'estadisticas' %}" id="estadisticas">Reportes</a></li>
+                        <li><a href="{% url 'proyectos' %}" id="proyectos">Proyectos</a></li>
+                    {% elif request.user|is_coord %}
+                        <li><a href="{% url 'proyectos' %}" id="proyectos">Proyectos</a></li>
+                        <li><a href="{% url 'register' %}" id="integrante">Integrantes</a></li>    
+                        <li><a href="{% url 'workline' %}" id="linea">Añadir línea</a></li>
+                        <li><a href="{% url 'produccion' %}" id="produccion">Producción cientifica</a></li>
+                        {% if request.user|have_semilleros %}
+                            <li><a href="{% url 'choose' %}" id="semillero1">Cambiar Semillero</a></li>
+                        {% endif %}
+                    {% endif %}
+                    <li><a href="{% url 'participar' %}" id="participar">Convocatorias</a></li>
+                    <li><a href="{% url 'tutoriales' %}" id="tutoriales">Tutoriales</a></li>
+                {%else%}
+                    <li><a href="{% url 'home' %}" id="home">Inicio</a></li>
+                    <li><a href="{% url 'semilleros' %}" id="semillero2">Nuestros Semilleros</a></li>
+                    <li><a href="{% url 'participar' %}" id="participar">Convocatorias</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div id="content">
+            <section id="formulario">
+                {% block cuerpo %}{% endblock %}
+            </section>
+            <aside>
+                {% if request.user.is_authenticated %}
+                    <div>
+                        <p><i class="fas fa-user"></i> {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                        <p><i class="fas fa-id-card"></i> 
+                            {% if request.user|is_coord %}
+                                Coordinador de semillero
+                            {% elif request.user|is_admin %}
+                                Administrador
+                            {% endif %}    
+                        </p>
+                        {% if request.user|is_coord %}
+                            <p><i class="fas fa-users"></i> <a title="Editar" alt="Editar" id="edit_sem" href="{% url 'editar' %}">{{semillero.name}}</a></p>
+                        {% endif %}    
+                    </div>
+                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                {% else %}
+                    <div>
+                        <p><i class="fas fa-users"></i> No ha iniciado sesión actualmente.</p>
+                    </div>
+                    <a href="{% url 'login' %}">Iniciar sesión</a>
+                {% endif %}
+            </aside>
+        </div>
+    
+    </div>
+
+        <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+
+</body>
+</html>
+                

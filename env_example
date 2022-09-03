@@ -1,0 +1,3 @@
+APP_HOST="Host del servidor"
+USER_MAIL="Correo de notificaciones"
+USER_MAIL_PASSWORD="Contraseña del aplicativo"

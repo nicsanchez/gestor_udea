@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+
+	<h1 class="h1">Editar convocatoria</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'participar' %}"><i class="fas fa-reply"></i></a>
+    <br>
+    <br>
+
+    <form id="editForm" action="" method="POST" enctype="multipart/form-data">
+  		{% csrf_token %}
+        <input type="hidden" name="contador" id="contador" value="0">
+        <input type="hidden" name="caso" id="caso" value="editar">
+        <input type="hidden" name="convocatoria" id="convocatoria" value="{{convocatoria.id}}">
+        <div id="campos">
+            <input type="text" name="name" id="name" placeholder="Nombre de la convocatoria" autocomplete="off" value="{{ convocatoria.name }}" required>
+            <textarea name="description" id="description" cols="30" rows="10" placeholder="Descripción" required>{{ convocatoria.description }}</textarea>
+			<label for="closed">Fecha de apertura</label>
+            <input type="date" value='{{ convocatoria.opened|date:"Y-m-d" }}' name="opened" id="opened" required>
+            <label for="closed">Fecha de cierre</label>
+            <input type="date" value='{{ convocatoria.closed|date:"Y-m-d" }}' name="closed" id="closed" required>
+            <label for="add_doc">Documentos Asociados</label>
+            <table id="tabla">
+                <tr>
+                    <th>Descripción</th>
+                    <th>Tipo</th>
+                    <th>Documentos</th>
+                    <th>Acciones</th>
+                </tr>
+                {% for document in documentos %}
+                    <tr>
+                        <td>{{document.description}}</td>
+                        {% if document.tipo == 1 %}
+                            <td>Informativo</td>
+                        {% elif document.tipo == 2 %}   
+                            <td>Opcional</td>
+                        {% elif document.tipo == 3 %}   
+                            <td>Obligatorio</td>    
+                        {% endif %} 
+                        <td>
+                            {% if document.documento %}
+                                <a href="{{document.documento.url}}" download>{{document.description}}</a>
+                            {% else %} 
+                                No tiene
+                            {% endif %} 
+                        </td>
+                        <td>
+                            <a class="config2" title="Eliminar" alt="Eliminar" id="del" onclick="delete1('{{document.id}}','2')" href="#"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %} 
+            </table>
+        </div>
+        <button type="button" name="add_doc" id="add_doc">Añadir documento</button>
+        <input id="enviar_editar" type="submit" value="Enviar"/>
+
+    </form>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/participate_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'conv/css/asignar_proyecto.css' %}">
+
+
+{% endblock %}

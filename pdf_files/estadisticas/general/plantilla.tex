@@ -1,0 +1,223 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plantilla formato de informe de avance/final proyecto semillero de 
+% investigación UdeA                                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+% Configuración del documento
+%-------------------------------------------------------------------------------
+\documentclass[12pt]{report}
+\usepackage[letterpaper, margin = 0.5in]{geometry}
+%----------------
+% Paquetes
+%----------------
+\input{packages}
+
+\newfontfamily\myfont[Scale=.9]{Roboto Slab}
+\newfontfamily\myfontS[Scale=.7]{Roboto Slab}
+\newfontfamily\myfontT[Scale=.9]{Roboto}
+\newcommand{\fontBig}{\fontsize{100pt}{30pt}\selectfont}
+\newcommand{\fontBigs}{\fontsize{60pt}{30pt}\selectfont}
+
+\setmainfont[Ligatures=TeX]{Roboto Slab}
+
+\definecolor{mycolor}{RGB}{0,116,115}
+\newcommand\wcolor{mycolor}
+\definecolor{mycolorC}{RGB}{59,191,173}
+\newcommand\wcolorC{mycolorC}
+
+\definecolor{mycolor334c}{RGB}{0,149,121}
+\newcommand\wcolorttc{mycolor334c}
+\definecolor{mycolor375c}{RGB}{147,213,0}
+\newcommand\wcolortsc{mycolor375c}
+
+%-------------------------------------------------------------------------------
+% Variables
+%-------------------------------------------------------------------------------
+\input{vars}
+\input{reportkind}
+
+%-------------------------------------------------------------------------------
+% Configuraciones adicionales
+%-------------------------------------------------------------------------------
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\graphicspath{{./Imagenes/}}
+\fboxsep0pt
+\fboxrule0pt %Eliminar las líneas de las minipages de la portada
+
+%-------------------------------------------------------------------------------
+% Encabezado y pie de pagina
+%-------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\myfont \reportkinds - \rtitle}
+\fancyfoot[L]{\myfont Pag. \thepage\ $/$ \pageref{LastPage}}
+
+%-------------------------------------------------------------------------------
+% Cuerpo del Reporte
+%-------------------------------------------------------------------------------
+\begin{document}
+%-------------------------
+%Imagen de fondo
+%-------------------------
+\thispagestyle{empty}
+\AddToShipoutPictureBG{
+	\begin{minipage}{\textwidth}
+			\begin{minipage}{0.7\textwidth}
+					\begin{tikzpicture}[remember picture, overlay, shift=(current page.center) ]
+						\node[opacity=0.5,inner sep=0pt]
+						{\includegraphics[width=0.7\paperwidth,height=0.7\paperheight]{escudoB.png}};
+					\end{tikzpicture}
+				\end{minipage}
+			\begin{minipage}{0.43\textwidth}
+					\flushright
+					\includegraphics[width=0.2\paperwidth]{centro.png}
+			\end{minipage}
+		\end{minipage}
+}
+
+%-------------------------
+%Cabecera, primera página
+%-------------------------
+\newgeometry{top=0.53in, bottom=0.7in, right=0.7in, left=0.5in}
+
+{\myfont
+	\begin{center}
+		\fbox{\begin{minipage}{1.03\textwidth}
+				\fbox{\begin{minipage}{0.31\textwidth}
+						\begin{center}
+							\includegraphics[scale = 0.16]{escudoFING.png}% University Logo
+						\end{center}
+				\end{minipage}}
+				\fbox{\begin{minipage}{0.58\textwidth}
+						\begin{center}%\large
+							\begin{tabular}{c}
+								\begin{minipage}[t]{0.95\columnwidth}%
+									\flushright
+									\textsc{\reportkinds}
+								\end{minipage}\\
+								\begin{minipage}[t]{0.95\columnwidth}%
+									\flushright
+									\textsc{\textbf{Sistema de Gestión de Semilleros}}                      
+								\end{minipage}
+							\end{tabular}
+						\end{center}
+				\end{minipage}}
+				\fbox{\begin{minipage}{0.09\textwidth}
+						\flushright
+						\textcolor{\wcolor}{\qrcode[height=0.6in]{\reportkinds - \rtitle}}
+				\end{minipage}}
+			\end{minipage}
+		}
+	\end{center}
+
+
+\begin{center}
+	\today
+\end{center}
+}
+\vspace{0.1 cm}
+
+%-----------------
+%Tipo de reporte
+%-----------------
+{\myfont
+\noindent
+\begin{minipage}{0.978\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{\textwidth}%
+			\cellcolor{\wcolor}\textcolor{white}{\textsc{\textbf{\rtitle}}}
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+
+%Calcular la cantidad de estudiantes por tipo y totales
+\StrCount{\NI}{,}[\nHotBed]
+\pgfmathsetmacro{\mysumTH}{0}
+\pgfmathtruncatemacro{\mysumTH}{\nHotBed}
+\xdef\mysumTH{\mysumTH}
+
+\ifthenelse{\mysumTH = 0}{
+	\vspace{3mm}
+	\rvacio
+}
+{
+	
+	\pgfmathtruncatemacro{\mysumTH}{\nHotBed - 1}
+	\xdef\mysumTH{\mysumTH}
+	
+	\pgfmathsetmacro{\mysumI}{0}
+
+	\foreach \i in {0,...,\mysumTH}
+	{
+		\pgfmatharray{\NI}{\i}
+		\pgfmathtruncatemacro{\mysumI}{\mysumI+\pgfmathresult}
+		\xdef\mysumI{\mysumI}
+	}
+
+
+	\noindent
+	\begin{minipage}{\textwidth}
+		\vspace{1mm}
+		\begin{flushright}
+		\begin{tabular}{ll}
+			\begin{minipage}[t]{0.45\textwidth}%
+				\flushright
+				\textcolor{\wcolorC}{\fontBig\textbf{\mysumI}}
+			\end{minipage}&
+			\begin{minipage}[t]{0.005\textwidth}%
+				\centering
+				\rotatebox{90}{\cellcolor{\wcolor}\textcolor{white}{\textsc{\textbf{Total}}}}
+			\end{minipage}
+		\end{tabular}	
+		\end{flushright}
+	\end{minipage}
+	\vspace{3mm}
+
+	\pgfmathsetmacro{\nHotBedt}{0}
+	\pgfmathtruncatemacro{\nHotBedt}{\mysumTH + 1}
+	\xdef\nHotBedt{\nHotBedt}
+	
+	\ifthenelse{\nHotBedt = 1}
+	{
+		Actualmente hay un semillero de investigación registrado en el sistema.
+	}
+	{
+		Actualmente hay \nHotBedt\xspace semilleros de investigación registrados en el sistema.
+	}
+
+	%-------------------------------------------
+	%Discriminación por semuilleros
+	%------------------------------------------
+	\vspace{3mm}
+	\noindent
+	\begin{minipage}{\textwidth}
+		\begin{tabular}{l}
+			\begin{minipage}[t]{1.002\textwidth}%
+				\cellcolor{\wcolor}\textcolor{white}{\textsc{\textbf{\rtitleI}}}
+			\end{minipage}
+		\end{tabular}	
+	\end{minipage}
+
+	\vspace{3mm}
+	
+	\pgfmathsetmacro{\tUno}{0}
+	\pgfmathsetmacro{\iter}{0}
+
+	
+	\foreach \i in {1,...,\nHotBedt}
+	{
+		\pgfmathtruncatemacro{\iter}{\i - 1}
+		\xdef\iter{\iter}
+		
+		%Valores de los integrantes de los semilleros
+		%Datos Primer Semillero
+		\pgfmatharray{\NI}{\iter}
+		\pgfmathtruncatemacro{\tUno}{\pgfmathresult}
+		\xdef\tUno{\tUno}
+		\rtitleS \xspace \hotbedNames(\i) es \xspace \tUno. 
+	}
+}%\ifthen
+}%\myfont
+\end{document}

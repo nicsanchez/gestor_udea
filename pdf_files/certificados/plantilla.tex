@@ -1,0 +1,145 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plantilla formato de informe de avance/final proyecto semillero de 
+% investigación UdeA                                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+% Configuración del documento
+%-------------------------------------------------------------------------------
+\documentclass[12pt]{report}
+\usepackage[letterpaper, margin = 0.5in]{geometry}
+%----------------
+% Paquetes
+%----------------
+\input{packages}
+\usepackage{fontspec}
+
+\newfontfamily\myfont[Scale=.9]{Roboto Slab}
+\newfontfamily\myfontT[Scale=.9]{Roboto}
+
+\definecolor{mycolor}{RGB}{0,116,115}
+\newcommand\wcolor{mycolor}
+\definecolor{mycolorC}{RGB}{59,191,173}
+\newcommand\wcolorC{mycolorC}
+
+%-------------------------------------------------------------------------------
+% Variables
+%-------------------------------------------------------------------------------
+\input{vars}
+%-------------------------------------------------------------------------------
+% Configuraciones adicionales
+%-------------------------------------------------------------------------------
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\graphicspath{{./Imagenes/}}
+\fboxsep0pt
+\fboxrule0pt %Eliminar las líneas de las minipages de la portada
+
+%-------------------------------------------------------------------------------
+% Encabezado y pie de pagina
+%-------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\newsavebox{\CARD}
+\fancyhead[L]{\usebox{\CARD}}
+\fancyhead[R]{Informe \reportkinds - Proyecto \code}
+\fancyfoot[L]{Pag. \thepage\ $/$ \pageref{LastPage}}
+
+%-------------------------------------------------------------------------------
+% Cuerpo del documento
+%-------------------------------------------------------------------------------
+\begin{document}
+%-------------------------
+%Imagen de fondo
+%-------------------------
+%\thispagestyle{empty}
+%\AddToShipoutPictureBG{
+%	\begin{tikzpicture}[remember picture, overlay, shift=(current page.center) ]
+%	\node[opacity=1,inner sep=0pt]
+%	{\includegraphics[width=0.7\paperwidth,height=0.7\paperheight]{escudoB.png}};
+%	\end{tikzpicture}}
+
+\thispagestyle{empty}
+\AddToShipoutPictureBG{
+	\begin{minipage}{\textwidth}
+			\begin{minipage}{0.5\textwidth}
+					\begin{tikzpicture}[remember picture, overlay, shift=(current page.center) ]
+						\node[opacity=1,inner sep=0pt]
+						{\includegraphics[width=0.7\paperwidth,height=0.7\paperheight]{escudoB.png}};
+					\end{tikzpicture}
+				\end{minipage}
+			\begin{minipage}{0.635\textwidth}
+					\flushright
+					\includegraphics[width=0.2\paperwidth]{centro.png}
+			\end{minipage}
+		\end{minipage}
+}
+
+
+%-------------------------
+%Cabecera, primera página
+%-------------------------
+%\newgeometry{top=0.5in, bottom=0.5in, right=0.9in, left=0.3in}
+\newgeometry{top=0.53in, bottom=0.7in, right=0.7in, left=0.5in}
+
+{\myfont
+	\begin{center}
+		\fbox{\begin{minipage}{1.03\textwidth}
+				\fbox{\begin{minipage}{0.31\textwidth}
+						\begin{center}
+							\includegraphics[scale = 0.16]{escudoFING.png}% University Logo
+						\end{center}
+				\end{minipage}}
+				\fbox{\begin{minipage}{0.58\textwidth}
+						\begin{center}%\large
+							\begin{tabular}{c}
+								\begin{minipage}[t]{0.95\columnwidth}%
+									\flushright
+									\textsc{Sistema de gestión de semilleros}
+								\end{minipage}\\
+								\begin{minipage}[t]{0.95\columnwidth}%
+									\flushright
+									\textsc{\textbf{\titled}}                      
+								\end{minipage}
+							\end{tabular}
+						\end{center}
+				\end{minipage}}
+				\fbox{\begin{minipage}{0.09\textwidth}
+						\flushright
+						\textcolor{\wcolor}{\qrcode[height=0.6in]{\web\code}}
+				\end{minipage}}
+			\end{minipage}
+		}
+	\end{center}
+}
+
+{\myfont
+\vspace{3.3 cm}
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+%------------------------
+%Información del proyecto
+%------------------------
+\begin{center}
+El semillero \textbf{\hotbed}\\
+\vspace{1.0 cm}
+Hace constar
+\end{center}
+
+Que, \textbf{\member}\xspace con documento de identificación \textbf{\identity}. Ha hecho parte del semillero de el \inicio. Su estado actual es \estado.\\\\
+
+Para constancia, este documento se expide el \today.\\\\
+
+Atentamente,\\\\\\\\
+
+\textbf{\leader}\\
+Coordinador\\
+Semillero \hotbed\\
+\resgroup
+\\\\\\\\
+{\footnotesize Se puede validar este documento escaneando el código QR del encabezado o visitando el enlace: \href{\web\code}{\web\code}}
+
+\end{minipage}
+\end{center}
+}
+\end{document}

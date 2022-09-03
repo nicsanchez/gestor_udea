@@ -1,0 +1,214 @@
+#participar {
+    color: #000;
+    background: #fff;
+}
+
+#bparticipar {
+    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+    color: white;
+    display: inline-flex;
+    text-align: center;
+    font-size: 10pt;
+    padding: 4px 15px;
+    background: #348F41;
+}
+
+#bparticipar:hover {
+    background: #01602D;
+}
+
+#dparticipar {
+    display: none;
+}
+
+.row{
+    font-family: Roboto-Light;
+    font-weight: 500;
+    text-align: justify;
+}
+
+.container .document p{
+    font-family: Roboto-Regular;
+    color: #348F41;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.container p, .row p{
+    font-family: Roboto-Regular;
+    color: #348F41;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+h1 {
+    display: inline-block;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, tr, th, td {
+    text-align: center;
+    border: 2px solid black;
+    font-family: Roboto-Light;
+    font-size: 10pt;
+    padding: 10px;
+}
+
+table tbody tr th {
+    font-family: Roboto-Regular;
+    color: #01602D;
+    font-size: 15px;
+}
+
+div a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #007297;
+}
+
+#a1{
+    text-decoration: none;
+    font-weight: bold;
+    color: #348F41;
+}
+
+input[type=button] {
+    background-color: #348F41; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+input[type=button]:hover {
+    background-color: #01602D;
+    cursor: pointer;
+}
+
+input[type=submit] {
+    background-color: #348F41; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+input[type=submit]:hover {
+    background-color: #01602D;
+    cursor: pointer;
+}
+
+input[type=file] {
+    text-transform: uppercase;
+}
+div #see1, div #see4 {
+    padding: 4px 10px;
+    background: #007473;
+}
+
+div #see1,div #see4:hover {
+    background: #007297;
+}
+div #send {
+    padding: 4px 10px;
+    background: #348F41;
+}
+
+div #send:hover {
+    background: #01602D;
+}
+div #edit,div #edit1,div #mail {
+    padding: 4px 10px;
+    background: #348F41;
+}
+
+div #edit:hover {
+    background: #01602D;
+}
+
+div #edit1:hover {
+    background: #01602D;
+}
+
+#tabla button,table #boton{
+    background-color: #348F41;
+    padding: 8px;
+    color: #fff;
+    border: none;
+}
+
+table #boton:hover{
+    background: #01602D;
+}
+
+#tabla{
+    border-collapse: collapse;
+    text-align: center;
+    width: 40%;
+    margin: auto;
+}
+
+#tabla_status{
+    border-collapse: collapse;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+#new{
+    color:#F5333F;
+}
+
+#new svg,#pen_r svg,#pen_c svg,#ready svg{
+    height: 20px;
+    width: 20px;
+}
+
+#pen_r{
+    color:#FFA400;
+}
+
+#pen_c{
+    color:#007297;
+}
+
+#ready{
+    color:#348F41;
+}
+#br{
+    margin-bottom: 10px
+}
+
+.formulario {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.formulario select,.formulario a,.formulario button{
+    display: initial;
+}
+
+.formulario select{
+    width: auto;
+    font-size: 13px;
+}
+
+div #mail:hover {
+    background: #01602D;
+    cursor: pointer;
+}

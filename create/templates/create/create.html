@@ -1,0 +1,108 @@
+{% extends 'core/base.html' %}
+{% load auth_extras %}
+{% block cuerpo %}
+    <h1 class="h1">Semilleros</h1>
+    <a class="config" title="Editar" alt="Editar" id="add" href="#"><i class="fas fa-plus"></i></a>
+    <a class="config" title="Ver" alt="Ver" id="see" href="#"><i class="fas fa-eye"></i></a>
+    <input type="text" id="textSearch" name="search" value="" placeholder="Búsqueda...">
+    <br>
+    <br>
+    <div class="see">
+        {% if Semilleros.count != 0%}
+            <table id="tableConv" style="overflow-x:auto;">
+                <tr>
+                    <th>Número</th>
+                    <th>Nombre</th>
+                    <th>Grupo de investigación</th>
+                    <th>Coordinador</th>
+                    <th>Fecha de creacion</th>
+                    {% if request.user|is_admin %}
+                        <th>Acciones</th>
+                    {% endif %}
+                </tr>
+                {% for semillero in Semilleros %}
+                    <tr class="info">
+                        <td>{{semillero.id}}</td>
+                        <td><a href="{% url 'semillero_details' id=semillero.id %}">{{semillero.name}}</a></td>
+                        <td>{{semillero.id_group}}</td>
+                        <td>{{semillero.coordinador.name}}<br>{{semillero.coordinador.lastname}}</td>
+                        <td>{{semillero.created|date:"SHORT_DATE_FORMAT"}}</td>
+                        {% if request.user|is_admin %}
+                            <td>
+                                <a class="config2" title="Editar" alt="Editar" id="editar" href="{% url 'semillero_edit' id=semillero.id %}"><i class="fas fa-pencil-alt"></i></a>                         
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+        {% else %}
+             <div class="message in-info">
+                <p>En este momento no hay semilleros registrados.</p>
+            </div>
+        {% endif %}  
+    </div>
+    <div class="add">    
+        <form id="semilleroForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div id="coord">
+                <label for="coord">Coordinador</label>
+                <input type="text" name="cedula" id="cedula" placeholder="Cedula del coordinador" autocomplete="off" required>
+                <button type="button" name="consult" id="consult">Consultar</button>
+            </div>
+            <div id="new_coord">
+                <p>{{ mensaje }}</p>
+                <input type="hidden" name="estado" id="estado" value="" autocomplete="off">
+                <div id="new_integr" >
+                    <label for="">Información del coordinador</label>
+                    <input type="text" name="name" id="name" placeholder="Nombres" autocomplete="off" required>
+                    <input type="text" name="lastname" id="lastname" placeholder="Apellidos" autocomplete="off" required>
+                    <label>Documento del coordinador</label>
+                    <p id="coord2" ></p>
+                    <br>
+                    <input type="email" name="email" id="email" placeholder="Correo electrónico" autocomplete="off" required>
+                    <input type="text" name="phone" id="phone" placeholder="Telefono" autocomplete="off" required>
+                    <input type="text" name="adicional" id="adicional" placeholder="Información Adicional" autocomplete="off">
+                </div>
+                <div id="new_user" >
+                    <label for="">Información del usuario</label>
+                    <input type="text" name="username" id="username" placeholder="Nombre de usuario" autocomplete="off" required>
+                    <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off" required>
+                    <input type="password" name="rpassword" id="rpassword" placeholder="Repetir contraseña" autocomplete="off" required>
+                </div>    
+                <button type="button" name="register" id="register">Registrar Coordinador</button>
+            </div>
+            <div id="campos">
+                <input type="hidden" name="caso" id="caso" value="" autocomplete="off">
+                <label for="coord"><b>Información del coordinador</b></label>
+                <p id="coord1" ></p>
+                <p id="coord3" ></p> 
+                <br>
+                <input type="hidden" id="coordinador" name="coordinador">
+                <label for="">Fecha de ingreso:</label>
+                <input type="date" name="joined" id="joined" required>
+
+                <label><b>Información del semillero</b></label>
+                <select name="id_group" id="id_group" required>
+                    <<option disabled selected>Seleccione un grupo de investigación</option>
+                    {% for grupo in grupos %}
+                        <option value="{{grupo.id}}">{{grupo.name}}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="name_s" id="name_s" placeholder="Nombre del semillero" autocomplete="off" required>
+                <label><b>Descripcion del semillero</b></label>
+                <textarea name="description" id="description" cols="30" placeholder="Descripcion" rows="10" required>{{ semillero.description }}</textarea>
+                <label><b>Correo de contacto</b></label>
+                <input type="email" name="mail" id="mail" placeholder="Correo de contacto" autocomplete="off" required>
+                <label><b>Imagen del semillero</b></label>
+                <input type="file" name="image" id="image">
+                <input type="submit" name="register11" id="register11" value="Registrar Semillero">
+            </div>
+        </form>
+    </div>
+    {% load static %}
+    <script src="{% static 'core/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'create/css/create_styles.css' %}">
+    
+
+{% endblock %}

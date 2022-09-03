@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">Agregar reporte al proyecto</h1>
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="caso" id="caso" value="0">
+  		{% csrf_token %}
+        <br>
+        <p><b>Proyecto: </b>{{proyecto.codigo}}</p>
+        <br>
+        <label for=""><b>Progreso del proyecto: </b></label>
+        <input type="text" name="progreso" id="progreso" value="{{proyecto.porcentaje}}" placeholder="ingrese el progreso del proyecto" required>
+        <label for=""><b>Actividades desarrolladas a la fecha: </b></label>
+        <textarea name="actividades" id="actividades" cols="30" rows="10" placeholder="Ingrese las actividades desarrolladas a la fecha" required></textarea>
+        <label for=""><b>Compromisos cumplidos a la fecha: </b></label>
+        <textarea name="compro_cum" id="compro_cum" cols="30" rows="10" placeholder="Ingrese los compromisos cumplidos a la fecha" required></textarea>
+        <label for=""><b>Compromisos pendientes a la fecha: </b></label>
+        <textarea name="compro_pen" id="compro_pen" cols="30" rows="10" placeholder="Ingrese los compromisos pendientes a la fecha" required></textarea>
+        <input id="visualizar_reporte" type="button" value="Visualizar"/>
+        <input id="enviar_reporte" type="button" value="Enviar"/>
+    </form>
+    
+    {% if mensaje %}
+        <script lenguague="JavaScript">
+            $.alert({
+                boxWidth: '400px',
+                useBootstrap: false,
+                closeIcon: true,
+                title: '{{mensaje1}}',
+                content: '{{mensaje}}',
+                typeAnimated: true,
+                buttons: {
+                    somethingElse: {
+                        text: 'Ok',
+                        btnClass: 'btn-warning',
+                        action: function(){
+                            window.location = "{% url 'proyectos' %}";
+                        }
+                    },
+                }
+            });
+        </script>
+    {% endif %}
+
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/participate_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'conv/css/proyectos_styles.css' %}">
+
+{% endblock %}
