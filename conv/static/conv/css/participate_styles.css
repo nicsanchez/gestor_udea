@@ -1,0 +1,154 @@
+#participar {
+    color: #000;
+    background: #fff;
+}
+
+h1 {
+	display: inline-block;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, tr, th, td {
+    text-align: center;
+    border: 2px solid black;
+    font-family: Roboto-Light;
+    font-size: 10pt;
+    padding: 10px;
+}
+
+table a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #348F41;
+}
+
+#textSearch {
+	width: auto;
+	float: right;
+	font-size: 12pt;
+    margin: 1.5% 0;
+}
+button {
+    background-color: #348F41; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #01602D;
+    cursor: pointer;
+}
+
+input[type=button] {
+    background-color: #348F41; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+input[type=button]:hover {
+    background-color: #01602D;
+    cursor: pointer;
+}
+
+table td select {
+	width: 100%;
+	text-align: center;
+	font-size: 8pt;   
+    font-family : Roboto-Light;
+}    
+div #see1 {
+    padding: 4px 10px;
+    background: #007473;
+}
+
+div #see1:hover {
+    background: #007297;
+}
+div #see2 {
+    padding: 4px 10px;
+    background: #348F41;
+}
+
+div #see2:hover {
+    background: #01602D;
+}
+.tabla{
+    border-collapse: collapse;
+    width: 40%;
+}
+
+#new{
+    color:#F5333F;
+}
+
+#new svg,#pen_r svg,#pen_c svg,#ready svg{
+    height: 20px;
+    width: 20px;
+}
+
+#pen_r{
+    color:#FFA400;
+}
+
+#pen_c{
+    color:#007297;
+}
+
+#ready{
+    color:#348F41;
+}
+
+#tabla_status{
+    border-collapse: collapse;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+.row p{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #274712;
+    font-weight: 700;
+    font-size: 20px;
+    font-style: oblique
+}
+
+#br{
+    margin-bottom: 10px
+}
+
+.formulario {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.formulario select,.formulario a,.formulario button{
+    display: initial;
+}
+
+.formulario select{
+    width: auto;
+    font-size: 13px;
+}
+
+table tbody tr th {
+    font-family: Roboto-Regular;
+    color: #01602D;
+    font-size: 15px;
+}

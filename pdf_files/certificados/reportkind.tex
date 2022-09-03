@@ -1,0 +1,77 @@
+%----------------
+%Tipo de solicitud
+%-----------------
+%Ajustar porcentaje de colores de acuerdo al porc. de avance
+\DIVIDE{\advances}{100}{\pcolor}
+
+\SUBTRACT{1}{\pcolor}{\R}
+\MULTIPLY{255}{\R}{\R}
+\INTEGERPART{\R}{\R} 
+
+\MULTIPLY{255}{\pcolor}{\G}
+\INTEGERPART{\G}{\G}
+
+\MULTIPLY{360}{\pcolor}{\B}
+\DEGREESSIN{\B}{\B}
+\ABSVALUE{\B}{\B}
+\MULTIPLY{255}{\B}{\B}
+\INTEGERPART{\B}{\B}
+
+\DIVIDE{0.53}{100}{\barlength}
+\MULTIPLY{\advances}{\barlength}{\solution}
+
+\definecolor{mycolorBar}{RGB}{\R, \G, 0}
+\newcommand\wcolorBar{mycolorBar}
+
+\newcommand\tope{100}
+\ifthenelse{\advances < \tope}{\newcommand\reportkinds{de Avance }}{\newcommand\reportkinds{Final }}
+%Ojo con el espacio al final, se debe agregar par que no quede pegada la siguiento palabra
+
+\newcommand{\mypageO}{
+%Final
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{\textwidth}%
+			\cellcolor{\wcolorC}\textsc{\textbf{Tipo de solicitud}}
+		\end{minipage}
+		\vspace{0.1cm}\\
+		\begin{minipage}[t]{\textwidth}%
+			\textbf{Informe \reportkinds}
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+}
+
+\newcommand{\mypageT}[3]{%<<<<
+%de Avance
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.45\textwidth}%
+			\cellcolor{\wcolorC}\textsc{\textbf{Tipo de Solicitud}}
+		\end{minipage}
+	\end{tabular}	
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.53\textwidth}%
+			\centering
+			\cellcolor{\wcolorC}\textsc{\textbf{Porcentaje de avance técnico del proyecto}}
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+
+\noindent	
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.45\textwidth}%
+			\textbf{Informe \reportkinds}
+		\end{minipage}
+	\end{tabular}	
+	\begin{tabular}{c}
+		\begin{minipage}[t]{#1\textwidth}
+			%\centering
+			\cellcolor{#2}\textbf{#3\%} %
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+}

@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+    <h1 class="h1" >Añadir línea de trabajo</h1>
+    <a class="config" title="Eliminar" alt="Eliminar" id="delete" href="#"><i class="fas fa-trash-alt"></i></a>
+    <a class="config" title="Editar" alt="Editar" id="editar" href="#"><i class="fas fa-pencil-alt"></i></a>
+    <a class="config" title="Ver" alt="Ver" id="see" href="#"><i class="fas fa-eye"></i></a>
+    <br>
+    <br>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="name" id="name" placeholder="Linea de investigación" autocomplete="off" required>
+        <textarea name="description" id="description" cols="30" rows="10" placeholder="Descripción" required></textarea>
+        <input type="submit" value="Enviar"/>
+    </form>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'create/css/workline_styles.css' %}">
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+%----------------
+%Tipo de solicitud
+%-----------------
+%Título del semillero
+\newcommand{\tHotbed}[1]{
+	\begin{minipage}[t]{0.45\textwidth}%
+		\cellcolor{\wcolorC}\textsc{\textbf{#1}}
+	\end{minipage}
+}
+
+%Cantidad de estudiantes en un semillero
+\newcommand{\nStudent}[1]{
+\begin{minipage}{0.45\textwidth}
+	\vspace{1mm}
+	\begin{flushright}
+		\begin{tabular}{ll}
+			\begin{minipage}[t]{\textwidth}%
+				\flushright
+				\textcolor{\wcolor}{\fontBigs\textbf{#1}}
+			\end{minipage}&
+			\begin{minipage}[t]{0.01\textwidth}%
+				\rotatebox{90}{\cellcolor{\wcolorC}{\textsc{\textbf{Total}}}}
+			\end{minipage}
+		\end{tabular}	
+	\end{flushright}
+\end{minipage}
+}
+
+%Gráficos
+\newcommand{\fPie}[3]{
+	\ADD{#1}{#2}{\tsuma}
+	
+	\ifthenelse{\tsuma > 0}
+	{
+		\DIVIDE{#1}{\tsuma}{\tsumaU}
+		\MULTIPLY{100}{\tsumaU}{\tsumaU}
+		\INTEGERPART{\tsumaU}{\tsumaU}
+		\SUBTRACT{100}{\tsumaU}{\tsumaG}
+		\ABSVALUE{\tsumaG}{\tsumaG}
+		\ADD{\tsumaG}{\tsumaU}{\tsumaV}
+		
+		\vspace{1mm}
+		\resizebox{#3\textwidth}{!}{
+			\begin{tikzpicture}[fill opacity=0.7, text opacity=1]
+				\tikzset{lines/.style={draw=white,ultra thick}}
+				\pie[text=legend,style={lines},color={\wcolortsc,\wcolorttc}]
+				{\tsumaU/#1 de Pregrado , \tsumaG/#2 de Posgrado}
+			\end{tikzpicture}
+		}
+	}
+	{
+		No hay estudiantes registrados.
+	}
+}
+
+%Dos por fila
+\newcommand{\fPieRow}[7]{
+	\ADD{#3}{#4}{\tsumaHA}
+	\ADD{#5}{#6}{\tsumaHB}
+	\ADD{#7}{0}{\tCols}
+	\noindent
+	\ifthenelse{\tCols = 1}
+	{
+		\begin{tabular}{ll}
+			\tHotbed{#1} & \tHotbed{#2}\\
+			\nStudent{\tsumaHA} &\nStudent{\tsumaHB}\\
+			\fPie{#3}{#4}{0.473} & \fPie{#5}{#6}{0.473}
+		\end{tabular}
+	}
+	{
+		\begin{center}
+			\begin{tabular}{l}
+				\tHotbed{#1}\\
+				\nStudent{\tsumaHA}\\
+				\fPie{#3}{#4}{0.473}
+			\end{tabular}
+		\end{center}
+	}
+}

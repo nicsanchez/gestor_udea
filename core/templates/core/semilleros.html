@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+    {% load static %}
+
+<h1 class="h1">Nuestros Semilleros</h1>
+<br>
+    {% if semilleros.count != 0 %}
+        {% for semillero in semilleros %}
+            <div class="project">
+                <div class="prj_img">
+                    <img src="{{semillero.image.url}}">
+                </div>
+                <div class="prj_content">
+                    <h2>{{semillero.name}}</h2>
+                    <hr>
+                    <p>{{semillero.description}}</p>
+                    <p><b>Coordinador:</b> {{semillero.coordinador}} {{semillero.coordinador.lastname}}</p>
+                    <p><b>Correo de contacto:</b> {{semillero.mail}}</p>
+
+                    <br>
+                    {% if semillero|have_info %}
+                        <a class="prj_boton" href="{% url 'semillero_details' id=semillero.id %}">Ver más</a>
+                    {% endif %}    
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}    
+        <br>
+        <div class="message in-info">
+            <p>En este momento no hay semilleros registrados en el aplicativo.</p>
+        </div>
+    {% endif %}
+
+    <link rel="stylesheet" href="{% static 'core/css/home_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/semilleros_styles.css' %}">
+{% endblock %}

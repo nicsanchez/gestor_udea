@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+
+    {% load static %}
+
+    <!--- Slider --->
+    <h1 class="h1">Noticias</h1>
+    <br>
+    <div class="flexslider">
+        <ul class="slides">
+            {% for layer in layers %}
+            <li>    
+                <a href="{% url 'news' id_item=layer.id %}"><img src="{{layer.banner.url}}"/></a>
+                <p class="flex-caption">{{layer.title}}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+
+    {% for noticia in noticias %}
+        <div class="project">
+            <div class="prj_img">
+                <img src="{{noticia.image.url}}">
+            </div>
+            <div class="prj_content">
+                <h2>{{noticia.title}}</h2>
+                <hr>
+                <p>{{noticia.description}}</p><br>
+                <a class="prj_boton" href="{% url 'news' id_item=noticia.id %}">Ver más</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <link rel="stylesheet" href="{% static 'core/css/home_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/flexslider.css' %}">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
+
+    <!-- FlexSlider -->
+    <script type="text/javascript" src="{% static 'core/js/jquery.flexslider.js' %}"></script>
+
+    <script type="text/javascript">
+        $(function(){
+          SyntaxHighlighter.all();
+        });
+        $(window).load(function(){
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function(slider){
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,254 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">{{item.name}}</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'participar' %}"><i class="fas fa-reply"></i></a>
+    {% if request.user|is_admin %}
+        <a class="config" title="Editar" alt="Editar" id="editar" href="{% url 'convocatoria_edit' id=item.id %}"><i class="fas fa-pencil-alt"></i></a>
+    {% endif %}
+    <br>
+    <br>
+    <div class="container">
+        <div class="row" >
+            <p>Descripción</p>
+            {{item.description}}
+        </div>
+        <br>
+        <div class="row" >
+            <p>Fecha de Apertura</p>
+            {{item.opened}}
+        </div>
+        <br>
+        <div class="row" >
+            <p>Fecha de cierre</p>
+            {{item.closed}}
+        </div>
+        <br>
+        {%if inf_documents.count != 0 or obl_documents.count != 0 or opc_documents.count != 0%}
+            <div class="row" >
+                <p>Documentos Asociados</p>
+                <br>
+                {% if inf_documents.count != 0%}
+                    <div class="document">
+                        <p>Informativos</p>
+                        {% for document in inf_documents %}
+                            <ul>
+                                <li>
+                                    {% if document.documento %}
+                                        <a href="{{document.documento.url}}" download>{{document.description}}</a>
+                                    {% else %} 
+                                        {{document.description}}
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                    <br>
+                {% endif %}
+                {% if obl_documents.count != 0%}
+                    <div class="document">
+                        <p>Obligatorios</p>
+                        {% for document in obl_documents %}
+                            <ul>
+                                <li>
+                                    {% if document.documento %}
+                                        <a href="{{document.documento.url}}" download>{{document.description}}</a>
+                                    {% else %} 
+                                        {{document.description}}
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                    <br>
+                {% endif %}  
+                {% if opc_documents.count != 0%}
+                    <div class="document">
+                        <p>Opcionales</p>
+                        {% for document in opc_documents %}
+                            <ul>
+                                <li>
+                                    {% if document.documento %}
+                                        <a href="{{document.documento.url}}" download>{{document.description}}</a>
+                                    {% else %} 
+                                        {{document.description}}
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                    <br>
+                {% endif %}    
+            </div>
+            <br>
+        {% endif %}
+    </div>
+    {% if request.user|is_admin %}
+        <div id="participantes">
+            <div class="row">
+                <p>Participantes</p>
+                <hr>
+            </div>
+            <br>
+            {% if participantes.count != 0%}
+                <table>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Semillero</th>
+                        <th>Coordinador</th>
+                        <th>Fecha de inscripción</th>
+                        <th>Acciones</th>
+                    </tr>    
+                    {% for participante in participantes %}
+                        <tr>
+                            {% if participante.estado == "0" %}
+                                <td id="new"><i class="fas fa-battery-empty"></i></td>
+                            {% elif participante.estado == "2" %}
+                                <td id="pen_r"><i class="fas fa-battery-quarter"></i></td>
+                            {% elif participante.estado == "3" %}
+                                <td id="pen_c"><i class="fas fa-battery-three-quarters"></i></td>
+                            {% elif participante.estado == "1" %}    
+                                <td id="ready"><i class="fas fa-battery-full"></i></td>
+                            {% endif %}
+                            <td><a id="a1" href="{% url 'semillero_details' id=participante.id_semillero.id %}">{{participante.id_semillero.name}}</a></td>
+                            <td>{{participante.id_semillero.coordinador.name}} {{participante.id_semillero.coordinador.lastname}}</td>
+                            <td>{{participante.created|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td>
+                                <a class="config2" title="Visualizar documentos adjuntos" alt="Visualizar documentos adjuntos" id="see4" href="{% url 'adjuntos' id=participante.id_semillero.id id_conv=item.id%}"><i class="fas fa-eye"></i></a>
+                                {% if participante.estado == "1" %}
+                                    <a class="config2" title="Asignar Proyecto" alt="Asignar" id="asignar" href="{% url 'asignar_proyecto' id=participante.id_semillero.id id_conv=item.id %}"><i class="fas fa-tasks"></i></a>
+                                {% endif %} 
+                            </td>
+                        </tr>
+                    {% endfor %}      
+                </table>
+                <br>
+                <div class="row">
+                    <p>Estado de las convocatorias</p>
+                    <hr>
+                </div>
+                <br>
+                <table id="tabla_status">
+                    <tr>
+                        <th>Icono</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td id="new"><i class="fas fa-battery-empty"></i></td>
+                        <td>Nuevo participante</td>
+                    </tr>
+                    <tr>
+                        <td id="pen_r"><i class="fas fa-battery-quarter"></i></td>
+                        <td>Pendiente de revision del administrador</td>
+                    </tr>
+                    <tr>
+                        <td id="pen_c"><i class="fas fa-battery-three-quarters"></i></td>
+                        <td>Pendiente de correccion del coordinador</td>
+                    </tr>
+                    <tr>
+                        <td id="ready"><i class="fas fa-battery-full"></i></td>
+                        <td>Listo</td>
+                    </tr>
+                </table>
+                <br>
+            {% else %}
+                <div class="message in-info">
+                    <p>En este momento no hay participantes.</p>
+                </div>
+            {% endif %}          
+        </div>
+        <br>
+    {% endif %}
+    
+    {% if item.closed >= today.date and item.opened <= today.date %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|is_coord%}
+                {% if participando%}
+                    <input type="button" id="bparticipar" value="Participar"/>
+                {%endif%}    
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    
+    <div id="dparticipar">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="caso" id="caso">
+            {% csrf_token %}
+            {%if obl_documents.count != 0 or opc_documents.count != 0%}
+                <label for="grupo">Para participar debe adjuntar los siguientes documentos:</label>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Adjuntar</th>
+                        <th>Obligatorio</th>
+                    </tr>
+                    {% for document in obl_documents %}
+                    <tr>
+                        <td>
+                            {% if document.documento %}
+                                <a href="{{document.documento.url}}" download>{{document.description}}</a>
+                            {% else %} 
+                                {{document.description}}
+                            {% endif %}
+                        </td>
+                        <td><input class="obligatorio" type="file" name="{{document.id}}" id="{{document.id}}" required></td>
+                        <td id="ready"><i class="fas fa-clipboard-check"></i></td>
+                    </tr>
+                    {% endfor %}
+                    {% for document in opc_documents %}
+                    <tr>
+                        <td>
+                            {% if document.documento %}
+                                <a href="{{document.documento.url}}" download>{{document.description}}</a>
+                            {% else %} 
+                                {{document.description}}
+                            {% endif %}
+                        </td>
+                        <td><input type="file" name="{{document.id}}" id="{{document.id}}"></td>
+                        <td><input type="checkbox" name="" id="" onclick="return false;"></td>
+                    </tr>
+                    {% endfor %}
+                </table>   
+                <br>
+            {% endif %}    
+            <input type="submit" id="enviar" value="Enviar">
+        </form>
+    </div>
+    {% if mensaje %}
+        <script lenguague="JavaScript">
+            $.alert({
+                boxWidth: '400px',
+                useBootstrap: false,
+                closeIcon: true,
+                title: '{{mensaje1}}',
+                content: '{{mensaje}}',
+                typeAnimated: true,
+                buttons: {
+                    somethingElse: {
+                        text: 'Ok',
+                        btnClass: 'btn-warning',
+                        action: function(){
+                            var mensaje = "{{mensaje1}}";
+                            if( mensaje == "Exito"){
+                                var comprobante = "{{comprobante}}";
+                                var a = document.createElement("a");
+                                a.href = "data:application/pdf;base64," + comprobante;
+                                a.download = "Comprobante.pdf";
+                                a.click();
+                            }
+                            window.location = "{% url 'participar' %}";
+                        }
+                    },
+                }
+            });
+        </script>
+    {% endif %}
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/details_styles.css' %}">
+
+{% endblock %}

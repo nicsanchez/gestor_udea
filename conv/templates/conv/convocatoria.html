@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+
+	<h1>Crear convocatoria</h1>
+    <a class="config" title="Eliminar" alt="Eliminar" id="delete" href="#"><i class="fas fa-trash-alt"></i></a>
+    <a class="config" title="Editar" alt="Editar" id="editar" href="#"><i class="fas fa-pencil-alt"></i></a>
+    <a class="config" title="Ver" alt="Ver" id="see" href="#"><i class="fas fa-eye"></i></a>
+    <hr>
+    <br>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+  		{% csrf_token %}
+        <input type="hidden" name="contador" id="contador" value="0">
+        <input type="hidden" name="estado" id="estado" value="0">
+        <div id="campos">
+            <input type="text" name="name" id="name" placeholder="Nombre de la convocatoria" autocomplete="off" required>
+            <select name="sName" id="sName">
+                {% for convocatoria in convocatorias %}
+                <option value="{{convocatoria.id}}">{{convocatoria.name}}</option>
+                {% endfor %}
+            </select>
+            <textarea name="description" id="description" cols="30" rows="10" placeholder="Descripción" equired></textarea>
+			<label for="closed">Fecha de apertura</label>
+            <input type="date" min="{{today}}" name="opened" id="opened" required>
+            <label for="closed">Fecha de cierre</label>
+            <input type="date" min="{{today}}" name="closed" id="closed" required>
+            <label for="add_doc">Añadir documentos</label>
+            <div>
+                <button type="button" name="add_doc" id="add_doc">Añadir documento</button>
+            </div>
+        </div>
+        <select name="lista" id="lista" hidden>
+            {% for convocatoria in convocatorias %}
+            <option value="{{convocatoria.id}}">{{convocatoria.name}}</option>
+            {% endfor %}
+        </select>
+        <input id="enviar" type="submit" value="Enviar"/>
+
+    </form>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/conv_styles.css' %}">
+
+{% endblock %}

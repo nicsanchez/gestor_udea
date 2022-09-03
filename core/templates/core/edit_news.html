@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+    <h1 class="h1">Editar Noticia</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'add_news' %}"><i class="fas fa-reply"></i></a>
+    <br>
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="campos">
+            <label for="title">Título</label>
+            <input type="text" name="title" id="title" value="{{noticia.title}}" required>
+            <label for="image">Imagen</label>
+            <a id="image1" href="{{noticia.image.url}}" download>Imagen Adjunta</a>
+            <input type="file" name="image" id="image">
+            <label for="banner">Banner</label>
+            <a id="image1" href="{{noticia.banner.url}}" download>Banner Adjunto</a>
+            <input type="file" name="banner" id="banner">
+            <label for="description">Descripción</label>
+            <textarea name="description" cols="30" rows="10" required>{{noticia.description}}</textarea>
+            <label for="content">Contenido</label>
+            <textarea name="content" id="textEditor" cols="30" rows="10" required>{{noticia.content}}</textarea>
+        </div>
+        <br>
+        <input type="submit" value="Enviar"/>
+    </form>
+    {% load static %}
+    <script src="{% static 'core/js/newsScript.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'core/css/news_styles.css' %}">
+
+{% endblock %}

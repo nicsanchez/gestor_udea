@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+    <h1 class="h1">Validación de certificado</h1>
+    <br>
+    {% if certificado %}
+        <div class="container">
+            <div class="row" >
+                <p><b>Identificador del certificado</b></p>
+                <p>{{certificado.id}}</p>
+            </div>
+            <br>
+            <div class="row" >
+                <p><b>Tipo de certificado</b></p>
+                <p>{{certificado.certificado.name}}</p>
+            </div>
+            <br>
+            <div class="row" >
+                <p><b>Persona</b></p>
+                <p>{{certificado.participante.id_integrante.name}} {{certificado.participante.id_integrante.lastname}}</p>
+            </div>
+            <br>
+            <div class="row" >
+                <p><b>Fecha de expedición</b></p>
+                <p>{{certificado.fecha_expedicion | date:"M d, Y"}}</p>
+            </div>
+            <br>
+        </div>
+    {% else %}
+        <div class="message in-info">
+            <p>El certificado ingresado no existe en el sistema.</p>
+        </div>
+    {% endif %}  
+    <br>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'create/css/validacion_styles.css' %}">
+    <script type="text/javascript" src="{% static 'create/js/script.js' %}"></script>
+{% endblock %}

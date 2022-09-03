@@ -1,0 +1,21 @@
+#home {
+    color: white;
+    background: #348F41;
+}
+
+#home:hover{
+    color: black;
+    background: white;
+}
+
+#semillero2{
+    color: black;
+    background: white;
+}
+
+.prj_content h2{
+    color: #348F41;
+}
+.prj_content p b{
+    color: #348F41;
+}

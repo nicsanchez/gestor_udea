@@ -1,0 +1,155 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+
+    <h1 class="h1" >Integrantes del semillero</h1>
+    <a class="config" title="Editar" alt="Editar" id="editar" href="#"><i class="fas fa-plus"></i></a>
+    <a class="config" title="Ver" alt="Ver" id="see" href="#"><i class="fas fa-eye"></i></a>
+    <input type="text" id="textSearch" name="search" value="" placeholder="Búsqueda...">
+    <br>
+    <br>
+    <div id="ver">
+        <table id="tableConv" style="overflow-x:auto;">
+            <tr>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            {% for integrante in integrantes %}
+                <tr class="info">
+                    <td>{{integrante.id_integrante.document}}</td>
+                    <td><a href="{% url 'integrante_details' id=integrante.id_integrante.id %}">{{integrante.id_integrante.name}} {{integrante.id_integrante.lastname}}</a></td>
+                    <td>{{integrante.rol}}</td>
+                    <td>
+                        {% if integrante.status == 1 %}   
+                            Activo
+                        {% else %}
+                            Inactivo    
+                        {% endif %}                        
+                    </td>
+                    <td>
+                        <a class="config2" title="Generar Certificado" alt="Generar certificado" id="gen" onclick="generateCertified('{{integrante.id}}')" href=""><i class="fas fa-stamp"></i></a>
+                        <a class="config2" title="Eliminar" alt="Eliminar" id="del" onclick="delete1('{{integrante.id}}')" href=""><i class="fas fa-trash-alt"></i></a>
+                        <a class="config2" title="Editar" alt="Editar" id="editar" href="{% url 'integrante_edit' id=integrante.id_integrante.id %}"><i class="fas fa-pencil-alt"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+    </div>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <div id="crear">
+            {% csrf_token %}
+            <input type="hidden" name="contador" id="contador" value="0">
+            <input type="hidden" name="caso" id="caso" value="">
+            <label for=""><b>Informacion del integrante</b></label>
+            <div id="inte">
+                <input type="text" name="cedula" id="cedula" placeholder="Cedula del integrante" autocomplete="off" required>
+                <button type="button" name="consult" id="consult">Consultar</button>
+            </div>
+            <div id="documento">
+                <p id="integrante1" ></p>
+                <p id="integrante2" ></p> 
+                <br>
+            </div>
+            <div id="nuevo">
+                <input type="text" name="name" id="name" placeholder="Nombres del integrante" autocomplete="off" required>
+                <input type="text" name="lastname" id="lastname" placeholder="Apellidos del integrante" autocomplete="off" required>
+                <input type="hidden" name="document" id="document" placeholder="Documento de identidad" autocomplete="off" required>
+                <input type="hidden" name="semillero" id="semillero" value="{{semillero.id}}">
+                <input type="email" name="email" id="email" placeholder="Correo electrónico" required>
+                <input type="text" name="phone" id="phone" placeholder="Telefono" required>
+                <input type="text" name="adicional" id="adicional" placeholder="Información Adicional">
+            </div>
+            <div id="campos">
+                <label for=""><b>Rol</b></label>
+                <select name="rol" id="rol" required>
+                    <option disabled selected>Seleccione un rol</option>
+                    {% for rol in roles %}
+                        <option value="{{rol.id}}">{{rol.name}}</option>
+                    {% endfor %}
+                </select>
+                <label for=""><b>Fecha de ingreso</b></label>
+                <input type="date" name="joined" id="joined" required>
+                <label for=""><b>Estado</b></label>
+                <select name="status" id="status" required>
+                    <option disabled selected>Seleccione el rol</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+                <div class="lineas">
+                    <label id="tline" for="lines"><b>Lineas de investigación</b></label>
+                    <select name="lineas" id="lineas" required>
+                        {% for linea in lineas %}
+                            <option value="{{linea.id}}">{{linea.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" id="lañadir">Añadir línea</button>
+                    <div>
+                        <table id="tabla">
+                            <tr><th colspan="2">Líneas</th></tr>
+                        </table>
+                        <a id="eliminar">Eliminar último</a>
+                    </div>
+                </div>
+                <div class="estudiante_otra">
+                    <label for=""><b>Informacion del estudiante</b></label>
+                    <label for=""><b>Tipo de programa</b></label>
+                    <select name="tipo_otra" id="tipo_otra" required>
+                        <option disabled selected>Seleccione un tipo de programa</option>
+                        <option value="1">Pregrado</option>
+                        <option value="2">Postgrado</option>
+                    </select>
+                </div>
+                <div class="estudiante">
+                    <label for=""><b>Informacion del estudiante</b></label>
+                    <label for=""><b>Tipo de programa</b></label>
+                    <select name="tipo" id="tipo" required>
+                        <option disabled selected>Seleccione un tipo de programa</option>
+                        <option value="1">Pregrado</option>
+                        <option value="2">Postgrado</option>
+                    </select>
+                    <div class="pre">
+                        <label for=""><b>Programas de pregrado</b></label>
+                        <select name="pregrado" id="pregrado" required>
+                            <option disabled selected>Seleccione un programa de pregrado</option>
+                            {% for pregrado in pregrados %}
+                                <option value="{{pregrado.id}}">{{pregrado.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="post">
+                        <label for=""><b>Programas de postgrado</b></label>
+                        <select name="postgrado" id="postgrado" required>
+                            <option disabled selected>Seleccione un programa de postgrado</option>
+                            {% for postgrado in postgrados %}
+                                <option value="{{postgrado.id}}">{{postgrado.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>    
+                    <label for=""><b>Nivel</b></label>
+                    <select name="level" id="level" required>
+                        <option disabled selected>Seleccione un nivel en el programa</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <input type="submit" id="enviar" value="Enviar"/>  
+            </div>      
+        </div>
+    </form>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'create/css/register_styles.css' %}">
+    <script type="text/javascript" src="{% static 'create/js/script.js' %}"></script>
+{% endblock %}

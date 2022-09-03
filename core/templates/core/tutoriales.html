@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+    {% load static %}
+
+<h1 class="h1">Tutoriales</h1>
+<br>
+
+    {% if request.user|is_admin %}
+        <p class="video-title">Tareas propias de un Administrador</p>
+        <div class="videos">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLEUuDIHfjvI2LRthfxLHhd4DJNzkrZN4n" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <p class="video-title">Tareas propias de un Coordinador</p>
+        <div class="videos">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLEUuDIHfjvI3PBksPCIa4G3bHYSuSmGi6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+    {% elif request.user|is_coord %}
+        <p class="video-title">Tareas propias de un Coordinador</p>
+        <div class="videos">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLEUuDIHfjvI3PBksPCIa4G3bHYSuSmGi6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    {% endif%}
+    <link rel="stylesheet" href="{% static 'core/css/home_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/tutoriales_styles.css' %}">
+{% endblock %}

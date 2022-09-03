@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+
+    <h1>Registrar usuario</h1>
+    <hr><br>
+
+    <p>{{ mensaje }}</p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="name" id="name" placeholder="Nombres" autocomplete="off" required>
+        <input type="text" name="lastname" id="lastname" placeholder="Apellidos" autocomplete="off" required>
+        <input type="text" name="username" id="username" placeholder="Nombre de usuario" autocomplete="off" required>
+		<input type="email" name="email" id="email" placeholder="Correo electrónico" autocomplete="off" required>
+        <select name="group">
+            <option value="Administrador">Administrador</option>
+            <option value="Coordinador">Coordinador</option>
+            <option value="Estudiante">Estudiante</option>
+        </select>
+        <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off" required>
+        <input type="password" name="rpassword" id="rpassword" placeholder="Repetir contraseña" autocomplete="off" required>
+        <input type="submit" value="Enviar">
+    </form>
+
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">Editar integrante</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'register' %}"><i class="fas fa-reply"></i></a>
+    <br>
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="contador" id="contador" value="{{linea_coordinador.count}}">
+        <input type="text" name="name" id="name" placeholder="Nombres del integrante" autocomplete="off" value="{{integrante.name}}" required>
+        <input type="text" name="lastname" id="lastname" placeholder="Apellidos del integrante" autocomplete="off" value="{{integrante.lastname}}" required>
+        <input type="text" name="document" id="document" placeholder="Documento de identidad" autocomplete="off" value="{{integrante.document}}" required>
+        <input type="email" name="email" id="email" placeholder="Correo electrónico" autocomplete="off" value="{{integrante.email}}" required>
+        <input type="text" name="phone" id="phone" placeholder="Telefono" autocomplete="off" value="{{integrante.phone}}" required>
+        <input type="text" name="adicional" id="adicional" placeholder="Información Adicional" autocomplete="off" value="{{integrante.aditional}}">
+        <label for=""><b>Rol</b></label>
+        <select name="rol" id="rol" required>
+            <option disabled selected>Seleccione el rol</option>
+            <option value="{{participante.rol.id}}" selected>{{participante.rol}}</option>
+            {% for rol in roles %}
+                {% if rol.id != participante.rol.id %}
+                    <option value="{{rol.id}}">{{rol.name}}</option>
+                {% endif %}    
+            {% endfor %}
+        </select>
+        <label for=""><b>Fecha de ingreso</b></label>
+        <input type="date" name="joined" id="joined" value='{{ participante.joined|date:"Y-m-d" }}' required>
+
+        <label for=""><b>Estado</b></label>
+        <select name="status" id="status" required>
+            <option disabled selected>Seleccione el rol</option>
+            {% if participante.status == 1%}
+                <option value="1" selected>Activo</option>
+                <option value="0">Inactivo</option>
+            {% else %}
+                <option value="1">Activo</option>
+                <option value="0" selected>Inactivo</option>
+            {% endif %}
+        </select>
+        
+        <div class="lineas">
+            <label id="tline" for="lines"><b>Lineas de investigación</b></label>
+            <select name="lineas" id="lineas" required>
+                {% for linea in lineas %}
+                    <option value="{{linea.id}}">{{linea.name}}</option>
+                {% endfor %}
+            </select>
+            <button type="button" id="lañadir">Añadir línea</button>
+            <div>
+                <table id="tabla">
+                    <tr><th colspan="2">Líneas</th></tr>
+                    {% if linea_coordinador.count != 0%}
+                        {% for linea in linea_coordinador %}
+                            <tr>
+                                <td class="classLine"><input type="text" value="{{linea.id_linea.id}}" readonly=""></td>
+                                <td><input type="text" value="{{linea.id_linea.name}}" readonly=""></td>
+                            </tr>
+                        {% endfor %}            
+                    {% endif %}
+                </table>
+                <a id="eliminar">Eliminar último</a>
+            </div>
+        </div>
+        <div class="estudiante_otra">
+            <label for=""><b>Informacion del estudiante</b></label>
+            <label for=""><b>Tipo de programa</b></label>
+            <select name="tipo_otra" id="tipo_otra" required>
+                <option disabled selected>Seleccione un tipo de programa</option>
+                {% if tipo == 'pregrado' %}
+                    <option value="1" selected>Pregrado</option>
+                    <option value="2">Postgrado</option>
+                {% elif tipo == 'postgrado' %}
+                    <option value="1">Pregrado</option>
+                    <option value="2" selected>Postgrado</option>
+                {% else %}
+                    <option value="1">Pregrado</option>
+                    <option value="2">Postgrado</option>
+                {% endif %} 
+            </select>
+        </div>
+        <div class="estudiante">
+            <label for=""><b>Informacion del estudiante</b></label>
+            <label for=""><b>Tipo de estudiante</b></label>
+            <select name="tipo" id="tipo" required>
+                <option disabled selected>Seleccione un tipo</option>
+                {% if pregrado %}
+                    <option value="1" selected>Pregrado</option>
+                    <option value="2">Postgrado</option>
+                {% elif postgrado %}
+                    <option value="1">Pregrado</option>
+                    <option value="2" selected>Postgrado</option>
+                {% else %}
+                    <option value="1">Pregrado</option>
+                    <option value="2">Postgrado</option>
+                {% endif %}    
+            </select>
+            <div class="pre">
+                <label for=""><b>Programas de pregrado</b></label>
+                <select name="pregrado" id="pregrado" required>
+                    <option disabled selected>Seleccione un programa de pregrado</option>  
+                    {% if pregrado %}
+                        {% for pregrado in pregrados %}
+                            {% if pregrado.id != atributo.id_programa.id %}
+                                <option value="{{pregrado.id}}">{{pregrado.name}}</option>
+                            {% else %}
+                                <option value="{{pregrado.id}}" selected>{{pregrado.name}}</option>    
+                            {% endif %}    
+                        {% endfor %}  
+                    {% else %}
+                        {% for pregrado in pregrados %}
+                            <option value="{{pregrado.id}}">{{pregrado.name}}</option>
+                        {% endfor %}  
+                    {% endif %}
+
+                </select>
+            </div>
+            <div class="post">
+                <label for=""><b>Programas de postgrado</b></label>
+                <select name="postgrado" id="postgrado" required>
+                    <option disabled selected>Seleccione un programa de postgrado</option>
+                    {% if postgrado %}
+                        {% for postgrado in postgrados %}
+                            {% if postgrado.id != atributo.id_programa.id %}
+                                <option value="{{postgrado.id}}">{{postgrado.name}}</option>
+                            {% else %}
+                                <option value="{{postgrado.id}}" selected>{{postgrado.name}}</option>
+                            {% endif %}    
+                        {% endfor %}  
+                    {% else %}
+                        {% for postgrado in postgrados %}
+                            <option value="{{postgrado.id}}">{{postgrado.name}}</option>
+                        {% endfor %}  
+                    {% endif %}
+                </select>
+            </div>    
+            <label for=""><b>Nivel</b></label>
+            <select name="level" id="level" required>
+                <option disabled selected>Seleccione un nivel en el programa</option>
+                {% if postgrado or pregrado %}
+                    {% for i in "x"|ljust:"10" %}
+                        {% if forloop.counter|stringformat:"i" != atributo.nivel %}
+                            <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                        {% else %}
+                            <option value="{{ forloop.counter }}" selected>{{ forloop.counter }}</option>
+                        {% endif %}        
+                    {% endfor %}
+                {% else %}
+                    {% for i in "x"|ljust:"10" %}
+                        <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                    {% endfor %}
+                {% endif %}    
+            </select>
+        </div>   
+        <input type="submit" id="enviar" value="Enviar"/>        
+    </form>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'create/css/register_styles.css' %}">
+    <script type="text/javascript" src="{% static 'create/js/script.js' %}"></script>
+{% endblock %}

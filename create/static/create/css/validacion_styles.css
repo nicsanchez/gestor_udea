@@ -1,0 +1,12 @@
+.row p b {
+    font-family: Roboto-Regular;
+    color: #348F41;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.row p {
+    font-family: Roboto-Light;
+    font-weight: 500;
+    text-align: justify;
+}

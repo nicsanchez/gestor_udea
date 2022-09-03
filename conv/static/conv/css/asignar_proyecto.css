@@ -1,0 +1,12 @@
+#tabla button{
+    margin: 0 auto;
+}
+
+#tabla textarea{
+    width: 240px;
+    height: 70px;
+    resize: both;
+    min-height: 70px;
+    max-width: 345px;
+    margin: 0 auto;
+}

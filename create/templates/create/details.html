@@ -1,0 +1,110 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">{{semillero.name}}</h1>
+    {% if request.user.is_authenticated %}
+        <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'create' %}"><i class="fas fa-reply"></i></a>
+        <a class="config" title="Editar" alt="Editar" id="editar" href="{% url 'semillero_edit' id=semillero.id %}"><i class="fas fa-pencil-alt"></i></a>
+    {%else%}
+        <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'semilleros' %}"><i class="fas fa-reply"></i></a>
+    {%endif%}
+    <br>
+    <br>
+    <div class="container">
+        <div class="row" >
+            <p><b>Coordinador</b></p>
+            <p>{{semillero.coordinador.name}} {{semillero.coordinador.lastname}}</p>
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Mision</b></p>
+            {% if semillero.mision %}
+                <p>{{semillero.mision}}</p>
+            {% else %}
+                <p>No ha sido registrado por el coordinador del semillero</p>
+            {% endif %}
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Vision</b></p>
+            {% if semillero.vision %}
+                <p>{{semillero.vision}}</p>
+            {% else %}
+                <p>No ha sido registrado por el coordinador del semillero</p>
+            {% endif %}
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Antecedentes</b></p>
+            {% if semillero.history %}
+                <p>{{semillero.history}}</p>
+            {% else %}
+                <p>No ha sido registrado por el coordinador del semillero</p>
+            {% endif %}
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Objetivos</b></p>
+            {% if semillero.goals %}
+                <p>{{semillero.goals}}</p>  
+            {% else %}
+                <p>No ha sido registrado por el coordinador del semillero</p>
+            {% endif %}
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Grupo de investigacion</b></p>
+            <p>{{semillero.id_group}}</p>
+        </div>
+        <br>
+        <div class="row" >
+            <p><b>Correo de contacto</b></p>
+            <p>{{semillero.mail}}</p>
+        </div>
+        <br>
+    </div>
+    {% if request.user.is_authenticated %}
+        <div class="row" >
+            <p><b>Integrantes</b><p>
+        </div>
+        <br>        
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Adicional</th>
+                <th>Ingresado</th>
+                <th>Rol</th>
+                <th>Estado</th>
+            </tr>
+            {% for integrante in integrantes %}
+                <tr>
+                    <td>{{integrante.id_integrante.name}}<br>{{integrante.id_integrante.lastname}}</td>
+                    <td>{{integrante.id_integrante.document}}</td>
+                    <td>{{integrante.id_integrante.email}}</td>
+                    <td>{{integrante.id_integrante.phone}}</td>
+                    <td>{{integrante.id_integrante.aditional}}</td>
+                    <td>{{integrante.joined|date:"SHORT_DATE_FORMAT"}}</td>
+                    <td>{{integrante.rol}}</td>
+                    <td>
+                        {% if integrante.status == 1 %}   
+                            Activo
+                        {% else %}
+                            Inactivo    
+                        {% endif %}                        
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+    {% endif %}    
+    {% load static %}
+    <script src="{% static 'core/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'create/css/details_style.css' %}">
+
+{% endblock %}

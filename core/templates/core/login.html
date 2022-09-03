@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">Iniciar sesión</h1>
+    <br>
+    <br>
+
+    {% if mensaje %}
+        <div class="message in-info">
+            <p>{{mensaje}}</p>
+        </div>
+        <br>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" id="username" placeholder="Nombre de usuario" autocomplete="off" required>
+        <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off" required>
+        <button type="submit">Ingresar</button>
+    </form>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'conv/css/conv_styles.css' %}">
+
+{% endblock %}

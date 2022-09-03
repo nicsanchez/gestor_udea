@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+
+    <h1 class="h1">Editar proyecto {{proyecto.codigo}}</h1>
+    <a class="config" title="Volver" alt="Volver" id="delete" href="{% url 'proyectos' %}"><i class="fas fa-reply"></i></a>
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+  		{% csrf_token %}
+        <br>
+        <p><b>Convocatoria: </b>{{proyecto.convocatoria.name}}</p>
+        <br>
+        <p><b>Semillero a cargo: </b>{{proyecto.semillero.name}}</p>
+        <br>
+        <input type="hidden" name="contador" id="contador" value="0">
+        <input type="hidden" name="caso" id="caso" value="editar">
+        <input type="text" name="codigo" id="codigo" placeholder="Codigo del proyecto" autocomplete="off" value="{{proyecto.codigo}}" required>
+        <textarea name="description" id="description" cols="30" rows="10" placeholder="Descripción del proyecto" required>{{proyecto.description}}</textarea>
+        <label for="closed">Fecha de inicio</label>
+        <input type="date" value="{{proyecto.start|date:'Y-m-d'}}" name="start" id="start" required>
+        <label for="closed">Fecha de cierre</label>
+        <input type="date" value="{{proyecto.closed|date:'Y-m-d'}}" name="closed" id="closed" required>
+        <table id="tabla">
+            <tr>
+                <th>Descripción</th>
+                <th>Documentos</th>
+                <th>Acciones</th>
+            </tr>
+            {% for documento in documentos %}
+                <tr>
+                    <td>{{documento.description}}</td>
+                    <td>
+                        {% if documento.documento %}
+                            <a href="{{documento.documento.url}}" download>{{documento.description}}</a>
+                        {% else %} 
+                            No tiene
+                        {% endif %} 
+                    </td>
+                    <td>
+                        <a class="config2" title="Eliminar" alt="Eliminar" id="del" onclick="delete1('{{documento.id}}','2')" href="#"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            {% endfor %} 
+        </table>
+        <button type="button" name="add_doc2" id="add_doc2">Añadir documento</button>
+        <input type="submit" value="Enviar"/>
+        </div>
+    </form>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'conv/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'conv/css/participate_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'conv/css/asignar_proyecto.css' %}">
+    <link rel="stylesheet" href="{% static 'conv/css/proyectos_styles.css' %}">
+
+{% endblock %}

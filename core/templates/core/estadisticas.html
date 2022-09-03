@@ -1,0 +1,78 @@
+{% extends 'core/base.html' %}
+
+{% load auth_extras %}
+
+{% block cuerpo %}
+    {% load static %}
+
+<h1 class="h1">Generar una estadística</h1>
+<br>
+<br>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="contador" id="contador">
+        <label for="">Seleccione una consulta:</label>
+        <select name="query" id="query">
+            <option value="0">Número de estudiantes UdeA por semillero</option>
+            <option value="2">Número de integrantes de un semillero</option>
+            <option value="3">Número de artículos de investigación publicados</option>
+            <option value="4">Número de capítulos de libros publicados</option>
+            <option value="5">Número de libros de investigación publicados</option>
+        </select>
+        <label for="">Escoja una opción:</label>
+        <select name="opcion" id="opcion">
+            <option value="0">Todos los semilleros</option>
+            <option value="1">Uno o varios semilleros</option>
+        </select>
+        <div class="listado">
+            <label for="">Listado de Semilleros</label>
+            <select name="semillero" id="ListaSemillero">
+                {% for semillero in semilleros %}
+                    <option value="{{semillero.id}}">{{semillero.name}}</option>
+                {% endfor %}
+            </select>
+            <button id="addSemillero">Agregar Semillero</button>
+            <div>
+                <table id="tabla">
+                    <tr><th colspan=2>Listado de semilleros</th></tr>
+                </table>
+            </div>
+            <br>
+        </div>
+        <button id="consulta">Consultar</button>
+    </form>
+    {% if mensaje %}
+        <script lenguague="JavaScript">
+            $.alert({
+                boxWidth: '400px',
+                useBootstrap: false,
+                closeIcon: true,
+                title: 'Resultado',
+                content: '{{mensaje}}',
+                typeAnimated: true,
+                buttons: {
+                    somethingElse: {
+                        text: 'Ok',
+                        btnClass: 'btn-warning',
+                        action: function(){
+                            window.location = "{% url 'estadisticas' %}";
+                        }
+                    },
+                }
+            });
+        </script>
+    {% endif %}
+    {% if reporte %}
+        <script lenguague="JavaScript">
+            var reporte = "{{reporte}}";
+            var a = document.createElement("a");
+            a.href = "data:application/pdf;base64," + reporte;
+            a.download = "Reporte.pdf";
+            a.click();    
+        </script>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'core/css/home_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/estadisticas_styles.css' %}">
+    <script src="{% static 'core/js/script.js' %}"></script>
+
+{% endblock %}

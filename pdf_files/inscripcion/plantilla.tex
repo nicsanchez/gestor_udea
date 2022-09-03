@@ -1,0 +1,211 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plantilla formato de registro de inscripción en convocatoria semilleros de 
+% investigación UdeA                                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
+% Configuración del documento
+%-------------------------------------------------------------------------------
+\documentclass[12pt]{report}
+
+%----------------
+% Paquetes
+%----------------
+\input{packages}
+\usepackage{fontspec}
+
+\newfontfamily\myfont[Scale=.75]{Roboto Slab}
+\newfontfamily\myfontT[Scale=.75]{Roboto}
+
+\definecolor{mycolor}{RGB}{0,116,115}
+\newcommand\wcolor{mycolor}
+\definecolor{mycolorC}{RGB}{59,191,173}
+\newcommand\wcolorC{mycolorC}
+
+%----------------
+% Variables
+%----------------
+\input{vars}
+
+%-------------------------------------------------------------------------------
+% Configuraciones adicionales
+%-------------------------------------------------------------------------------
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\graphicspath{{./Imagenes/}}
+
+\fboxsep0pt
+\fboxrule0pt %Eliminar las líneas de las minipages de la portada
+
+%-------------------------------------------------------------------------------
+% Encabezado y pie de pagina
+%-------------------------------------------------------------------------------
+
+\pagestyle{fancy}
+\fancyhf{}
+\newsavebox{\CARD}
+\fancyhead[L]{\usebox{\CARD}}
+\fancyhead[R]{\convo - \code}
+\fancyfoot[R]{Pag. \thepage\ $/$ \pageref{LastPage}}
+
+\sbox{\CARD}{%
+	\begin{pspicture}(0.5in, 0.3in)
+	\psbarcode{\convo - \code}{parse rows=15 columns=4 width=2 height=0.3}{micropdf417}
+	\end{pspicture}
+}
+%-------------------------------------------------------------------------------
+% Cuerpo del Examen
+%-------------------------------------------------------------------------------
+\begin{document}
+\newgeometry{top=0.2in, bottom=0.2in, right=0.7in, left=0.5in}
+%-------------------------
+%Imagen de fondo
+%-------------------------
+\thispagestyle{empty}
+\AddToShipoutPictureBG{
+	\begin{minipage}{0.35\textwidth}
+		\flushright
+		\begin{tikzpicture}
+			{\includegraphics[width=0.4\paperwidth]{escudoB.png}};
+		\end{tikzpicture}
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+		\begin{tikzpicture}
+		\node[inner sep=245pt]
+		{\includegraphics[width=0.175\paperwidth]{centro.png}};
+		\end{tikzpicture}
+	\end{minipage}
+}
+
+%-------------------------
+%Cabecera, primera página
+%-------------------------
+{\myfont
+\begin{center}
+\fbox{\begin{minipage}{1.03\textwidth}
+		\fbox{\begin{minipage}{0.31\textwidth}
+				\begin{center}
+					\includegraphics[scale = 0.13]{escudoFING.png}% University Logo
+				\end{center}
+		\end{minipage}}
+		\fbox{\begin{minipage}{0.58\textwidth}
+				\begin{center}%\large
+					\begin{tabular}{c}
+						\begin{minipage}[t]{0.95\columnwidth}%
+							\flushright
+							\textsc{\titleC}
+						\end{minipage}\\
+						\begin{minipage}[t]{0.95\columnwidth}%
+							\flushright
+							\textsc{\textbf{\convo}}                      
+						\end{minipage}
+					\end{tabular}
+				\end{center}
+		\end{minipage}}
+		\fbox{\begin{minipage}{0.09\textwidth}
+				\flushright
+				\textcolor{\wcolor}{\qrcode[height=0.6in]{\convo - \code}}
+		\end{minipage}}
+	\end{minipage}
+}
+\end{center}
+}
+\bigskip
+%------------------------
+%Información del Registro
+%------------------------
+{\myfont
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.5\textwidth}%
+			\cellcolor{\wcolor}\textcolor{white}{\textsc{\textbf{Información del Registro}}}
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+
+
+%Fecha y Hora
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.65\textwidth}%
+			\cellcolor{\wcolorC}\textcolor{white}{\textsc{\textbf{Fecha}}}
+		\end{minipage}
+	\end{tabular}	
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.325\textwidth}%
+			\centering
+			\cellcolor{\wcolorC}\textcolor{white}{\textsc{\textbf{Hora}}}
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.65\textwidth}%
+			\today
+		\end{minipage}
+	\end{tabular}	
+	\begin{tabular}{c}
+		\begin{minipage}[t]{0.325\textwidth}
+			\centering
+			\currenttime
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+
+%Información del Semillero y código de inscripción
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.65\textwidth}%
+			\cellcolor{\wcolorC}\textcolor{white}{\textsc{\textbf{Nombre del semillero}}}
+		\end{minipage}
+	\end{tabular}	
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.325\textwidth}%
+			\centering
+			\cellcolor{\wcolorC}\textcolor{white}{\textsc{\textbf{Código de la Inscripción}}}
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{0.65\textwidth}%
+			\hotbed
+		\end{minipage}
+	\end{tabular}	
+	\begin{tabular}{c}
+		\begin{minipage}[t]{0.325\textwidth}
+			\centering
+			\textbf{\code}
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{\textwidth}%
+			\cellcolor{\wcolorC}\textcolor{white}{\textsc{\textbf{Nombre completo del coordinador del semillero:}}}
+		\end{minipage}
+		\vspace{0.1cm}\\
+		\begin{minipage}[t]{\textwidth}%
+			\leader
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+\noindent
+\begin{minipage}{\textwidth}
+	\begin{tabular}{l}
+		\begin{minipage}[t]{\textwidth}%
+			\cellcolor{\wcolorC}\textcolor{white}{\textsc{\textbf{Nombre del grupo de investigación al que se encuentra adscrito el semillero:}}}
+		\end{minipage}
+		\vspace{0.1cm}\\
+		\begin{minipage}[t]{\textwidth}%
+			\resgroup
+		\end{minipage}
+	\end{tabular}	
+\end{minipage}
+}
+\end{document}
